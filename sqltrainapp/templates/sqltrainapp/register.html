@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>注册</title>
+    {% include '../sqltrainapp/include_CSS_JS.html' %}
+    <style>
+        .text-white {
+            color: white
+        }
+
+        .background {
+            background-image: url(../../static/sqltrainapp/img/pic.jpeg)
+        }
+    </style>
+</head>
+
+<body>
+{% include '../sqltrainapp/include_head.html' %}
+
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <p>此网站不对外开放，所以你需要有一个单独的账号。</p>
+        <p>现在！进行注册，然后开始训练吧。</p>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 background">
+            <div class="col-md-8 ">
+                <br>
+                <fieldset>
+                    <legend class="text-center"><h2>注册</h2></legend>
+                    <form action="{% url 'sqltrainapp:register_detail' %}" method="POST">
+                        {% csrf_token %} <!-- 这是一个防出错的标签，只要有表单，就加上它。 -->
+                        <div class="row">
+                            <div class="form-group col-xs-8">
+                                <label for="id_user_name" class="text-white">用户名</label>
+                                <input type="text" name="user_name" id="id_user_name" class="form-control"
+                                       placeholder="必填,4-15个字符" value="{{ user.user_name }}"
+                                       maxlength="15" minlength="4" required/>
+                                <span style="color: red">{{ error.user_name.0 }}</span>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-6">
+                                <label for="id_pwd" class="text-white">密码</label>
+                                <input type="password" name="pwd" id="id_pwd"
+                                       class="form-control"
+                                       placeholder="必填，6-40个字符"
+                                       maxlength="40" minlength="6" required/>
+                                <span style="color: red">{{ error.pwd.0 }}</span>
+                            </div>
+                            <div class="form-group col-xs-6">
+                                <label for="id_pwd2" class="text-white">确认密码</label>
+                                <input type="password" name="pwd2" id="id_pwd2"
+                                       class="form-control"
+                                       placeholder="必填，6-40个字符"
+                                       maxlength="40" minlength="6" required/>
+                                <span style="color: red">{{ error.pwd2.0 }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-8">
+                                <label for="id_school" class="text-white">学校</label>
+                                <input id="id_school" name="school" type="text" class="form-control"
+                                       placeholder="必填"
+                                       value="{{ user.school }}" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-6">
+                                <label for="id_faculties" class="text-white">院系</label>
+                                <input id="id_faculties" name="faculties" type="text" class="form-control"
+                                       placeholder="必填"
+                                       value="{{ user.faculties }}" required>
+                            </div>
+                            <div class="form-group col-xs-6">
+                                <label for="id_cls" class="text-white">班级</label>
+                                <input id="id_cls" name="cls" type="text" class="form-control"
+                                       placeholder="必填"
+                                       value="{{ user.cls }}" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <button class="btn btn-lg btn-primary center-block" type="submit">注册</button>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

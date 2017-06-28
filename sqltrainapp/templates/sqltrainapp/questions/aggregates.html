@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>basic</title>
+    {% include '../include_CSS_JS.html' %}
+</head>
+<body>
+{% include '../include_head.html' %}
+<div class="container">
+    <div class="page-header"><h1> Aggregation <a href="count.html" class="btn btn-primary btn-large"
+                                                 style="margin-left: 50px;">Begin!</a></h1></div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="panel-body col-md-8"><p>
+            <p>Aggregation is one of those capabilities that really make you appreciate the power of relational database
+                systems. It allows you to move beyond merely persisting your data, into the realm of asking truly
+                interesting questions that can be used to inform decision making. This category covers aggregation at
+                length, making use of standard grouping as well as more recent window functions.</p>
+            <p>If you struggle with these questions, I strongly recommend <a
+                    href="http://shop.oreilly.com/product/9780596007270.do">Learning SQL</a>, by Alan Beaulieu and <a
+                    href="http://shop.oreilly.com/product/9780596009762.do">SQL Cookbook</a> by Anthony Molinaro. In
+                fact, get the latter anyway - it'll take you beyond anything you find on this site, and on multiple
+                different database systems to boot.</p> </p> </div>
+    </div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="col-md-8">
+            <ul class="topiclisting">
+                <li><span class="listingitem"><a class="listlink"
+                                                 href='count.html'>Count the number of facilities</a></span></li>
+                <li><span class="listingitem"><a class="listlink" href='count2.html'>Count the number of expensive facilities</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='count3.html'>Count the number of recommendations each member makes.</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='fachours.html'>List the total slots booked per facility</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='fachoursbymonth.html'>List the total slots booked per facility in a given month</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='fachoursbymonth2.html'>List the total slots booked per facility per month</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='members1.html'>Find the count of members who have made at least one booking</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='fachours1a.html'>List facilities with more than 1000 slots booked</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='facrev.html'>Find the total revenue of each facility</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='facrev2.html'>Find facilities with a total revenue less than 1000</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='fachours2.html'>Output the facility id that has the highest number of slots booked</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='fachoursbymonth3.html'>List the total slots booked per facility per month, part 2</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='fachours3.html'>List the total hours booked per named facility</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='nbooking.html'>List each member's first booking after September 1st 2012</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='countmembers.html'>Produce a list of member names, with each row containing the total member count</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='nummembers.html'>Produce a numbered list of members</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='fachours4.html'>Output the facility id that has the highest number of slots booked, again</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='rankmembers.html'>Rank members by (rounded) hours used</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='facrev3.html'>Find the top three revenue generating facilities</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='classify.html'>Classify facilities by value</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='payback.html'>Calculate the payback time for each facility</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='rollingavg.html'>Calculate a rolling average of total revenue</a></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

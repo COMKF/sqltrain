@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>basic</title>
+    {% include '../include_CSS_JS.html' %}
+</head>
+<body>
+{% include '../include_head.html' %}
+<div class="container">
+    <div class="page-header"><h1> Joins and Subqueries <a href="simplejoin.html" class="btn btn-primary btn-large"
+                                                          style="margin-left: 50px;">Begin!</a></h1></div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="panel-body col-md-8"><p>
+            <p>This category deals primarily with a foundational concept in relational database systems: joining.
+                Joining allows you to combine related information from multiple tables to answer a question. This isn't
+                just beneficial for ease of querying: a lack of join capability encourages denormalisation of data,
+                which increases the complexity of keeping your data internally consistent.
+            <p>This topic covers inner, outer, and self joins, as well as spending a little time on subqueries (queries
+                within queries). If you struggle with these questions, I strongly recommend <a
+                        href="http://shop.oreilly.com/product/9780596007270.do">Learning SQL</a>, by Alan Beaulieu, as a
+                concise and well-written book on the subject.</p> </p> </div>
+    </div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="col-md-8">
+            <ul>
+                <li><span><a
+                        href='simplejoin.html'>Retrieve the start times of members' bookings</a></span>
+                </li>
+                <li><span><a href='simplejoin2.html'>Work out the start times of bookings for tennis courts</a></span>
+                </li>
+                <li><span><a
+                        href='self.html'>Produce a list of all members who have recommended another member</a></span>
+                </li>
+                <li><span><a href='self2.html'>Produce a list of all members, along with their recommender</a></span>
+                </li>
+                <li><span><a href='threejoin.html'>Produce a list of all members who have used a tennis court</a></span>
+                </li>
+                <li><span><a href='threejoin2.html'>Produce a list of costly bookings</a></span>
+                </li>
+                <li><span><a href='sub.html'>Produce a list of all members, along with their recommender, using no joins.</a></span>
+                </li>
+                <li><span><a
+                        href='tjsub.html'>Produce a list of costly bookings, using a subquery</a></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

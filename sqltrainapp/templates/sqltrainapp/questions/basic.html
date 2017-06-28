@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>basic</title>
+    {% include '../include_CSS_JS.html' %}
+</head>
+<body>
+{% include '../include_head.html' %}
+<div class="container">
+    <div class="page-header"><h1> Simple SQL Queries <a href="selectall.html" class="btn btn-primary btn-large"
+                                                        style="margin-left: 50px;">Begin!</a></h1></div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="panel-body col-md-8"><p>
+            <p>This category deals with the basics of SQL. It covers select and where clauses, case expressions, unions,
+                and a few other odds and ends. If you're already educated in SQL you will probably find these exercises
+                fairly easy. If not, you should find them a good point to start learning for the more difficult
+                categories ahead!</p>
+            <p>If you struggle with these questions, I strongly recommend <a
+                    href="http://shop.oreilly.com/product/9780596007270.do">Learning SQL</a>, by Alan Beaulieu, as a
+                concise and well-written book on the subject. If you're interested in the fundamentals of database
+                systems (as opposed to just how to use them), you should also investigate An Introduction to Database
+                Systems by C.J. Date.</p> </p> </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <ul>
+                <li><span>
+                    <a href='{% url 'training:moban' %}'>Retrieve everything from a table</a></span>
+                </li>
+                <li><span>
+                    <a href='{% url 'training:moban' %}'>Retrieve specific columns from a table</a></span>
+                </li>
+                <li><span><a href='where.html'>Control which rows are retrieved</a></span>
+                </li>
+                <li><span><a href='where2.html'>Control which rows are retrieved - part 2</a></span>
+                </li>
+                <li><span><a href='where3.html'>Basic string searches</a></span>
+                </li>
+                <li><span><a href='where4.html'>Matching against multiple possible values</a></span>
+                </li>
+                <li><span><a href='classify.html'>Classify results into buckets</a></span>
+                </li>
+                <li><span><a href='date.html'>Working with dates</a></span></li>
+                <li><span><a href='unique.html'>Removing duplicates, and ordering results</a></span>
+                </li>
+                <li><span><a href='union.html'>Combining results from multiple queries</a></span>
+                </li>
+                <li><span><a href='agg.html'>Simple aggregation</a></span></li>
+                <li><span><a href='agg2.html'>More aggregation</a></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

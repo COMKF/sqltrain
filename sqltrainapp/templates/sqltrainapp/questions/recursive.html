@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>basic</title>
+    {% include '../include_CSS_JS.html' %}
+</head>
+<body>
+{% include '../include_head.html' %}
+<div class="container">
+    <div class="page-header"><h1> Recursive Queries <a href="getupward.html" class="btn btn-primary btn-large"
+                                                       style="margin-left: 50px;">Begin!</a></h1></div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="panel-body col-md-8"><p>
+            <p>Common Table Expressions allow us to, effectively, create our own temporary tables for the duration of a
+                query - they're largely a convenience to help us make more readable SQL. Using the <a
+                        href="http://www.postgresql.org/docs/current/static/queries-with.html">WITH RECURSIVE</a>
+                modifier, however, it's possible for us to create recursive queries. This is enormously advantageous for
+                working with tree and graph-structured data - imagine retrieving all of the relations of a graph node to
+                a given depth, for example.</p>
+            <p>This category shows you some basic recursive queries that are possible using our dataset.</p> </p> </div>
+    </div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="col-md-8">
+            <ul class="topiclisting">
+                <li><span class="listingitem"><a class="listlink" href='getupward.html'>Find the upward recommendation chain for member ID 27</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='getdownward.html'>Find the downward recommendation chain for member ID 1</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='getupwardall.html'>Produce a CTE that can return the upward recommendation chain for any member</a></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
