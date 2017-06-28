@@ -34,3 +34,4 @@ urlpatterns = [
     # url(r'templates/polls/add/$', views.addView.as_view(), name='add'),
     # url(r'templates/polls/question/$', views.questionView.as_view(), name='question'),
 ]
+
