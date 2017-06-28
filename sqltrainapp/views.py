@@ -3,6 +3,7 @@ from .form import register_f, login_f
 from .models import User
 from django.http import HttpResponseRedirect
 
+
 def check(func):  # 使用装饰器验证用户登录
     def wrapper(*args, **kw):
         x = args[0]  # 先获取request
