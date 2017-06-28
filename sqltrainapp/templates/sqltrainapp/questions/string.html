@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>basic</title>
+    {% include '../include_CSS_JS.html' %}
+</head>
+<body>
+{% include '../include_head.html' %}
+<div class="container">
+    <div class="page-header"><h1> String Operations <a href="concat.html" class="btn btn-primary btn-large"
+                                                       style="margin-left: 50px;">Begin!</a></h1></div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="panel-body col-md-8"><p>
+            <p>String operations in most RDBMSs are, arguably, needlessly painful. Fortunately, Postgres is better than
+                most in this regard, providing strong regular expression support. This section covers basic string
+                manipulation, use of the LIKE operator, and use of regular expressions. I also make an effort to show
+                you some alternative approaches that work reliably in most RDBMSs. Be sure to check out Postgres' string
+                function <a href="http://www.postgresql.org/docs/current/static/functions-matching.html">docs page</a>
+                if you're not confident about these exercises.</p>
+            <p>Anthony Molinaro's <a href="http://shop.oreilly.com/product/9780596009762.do">SQL Cookbook</a> provides
+                some excellent documentation of (difficult) cross-DBMS compliant SQL string manipulation. I'd strongly
+                recommend his book, particularly as it's published by O'Reilly, whose ethical policy of DRM-free ebook
+                distribution deserves rich rewards.</p> </p> </div>
+    </div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="col-md-8">
+            <ul class="topiclisting">
+                <li><span class="listingitem"><a class="listlink"
+                                                 href='concat.html'>Format the names of members</a></span></li>
+                <li><span class="listingitem"><a class="listlink" href='like.html'>Find facilities by a name prefix</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='case.html'>Perform a case-insensitive search</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='reg.html'>Find telephone numbers with parentheses</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='pad.html'>Pad zip codes with leading zeroes</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='substr.html'>Count the number of members whose surname starts with each letter of the alphabet</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink"
+                                                 href='translate.html'>Clean up telephone numbers</a></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>首页</title>
+    {% include '../sqltrainapp/include_CSS_JS.html' %}
+</head>
+<body>
+{% include '../sqltrainapp/include_head.html' %}
+
+<div class="container">
+    <div class="page-header"><h1>About</h1></div>
+    <div class="row">
+        <div class="panel-body col-md-9"><p>PostgreSQL Exercises was made by <a href="http://www.zaltys.net">Alisdair Owens</a>. I
+            noticed that while there was a lot of information out there on database systems, there didn't seem to be a
+            lot of places to learn by <i>doing</i> in a structured manner. I hope this site helps people out.</p>
+            <ul>
+                <li><a href="#contact">How can I contact you?</a>
+                <li><a href="#security">You're running raw SQL! How did you secure the server?</a>
+                <li><a href="#coding">I want to contribute/Your CSS sucks/I have a suggestion for the site code.</a>
+                <li><a href="#writes">What about creates, updates, and deletes?</a>
+                <li><a href="#tech">What technologies were used in this site?</a>
+            </ul>
+        </div>
+    </div>
+    <div class="row aboutheader">
+        <div class="panel-body col-md-9"><a name="contact"></a>
+            <h3>How can I contact you?</h3></div>
+    </div>
+    <div class="row aboutqstn">
+        <div class="panel-body col-md-8 offset1"><p>For anything related to the site, mail me at <a
+                href="mailto:pgexercises@pgexercises.com">pgexercises@pgexercises.com</a>. For anything else, find
+            details on my personal web site <a href="http://www.zaltys.net">www.zaltys.net</a>.</p></div>
+    </div>
+    <div class="row aboutheader">
+        <div class="panel-body col-md-9"><a name="security"></a>
+            <h3>You're running raw SQL! How did you secure the server?</h3></div>
+    </div>
+    <div class="row aboutqstn">
+        <div class="panel-body col-md-8 offset1"><p>Good question! Generally speaking, allowing raw SQL to run against your database
+            is, of course, a big no-no. We're aided rather in this by the fact that all our work here is read-only,
+            allowing us to easily prevent malicious writes to the DB :-). Other concerns are people running very
+            expensive queries, changing settings, etc. I've taken the following security measures:</p>
+            <ul>
+                <li>User has read-only access to the exercises tables and nothing else.
+                <li>Each statement is time limited using statement_timeout.
+                <li>App server connects through pgbouncer, which is configured for statement-level pooling. When the
+                    connection gets returned between statements pgbouncer runs ABORT; and clears any settings,
+                    preventing the user from changing settings on the pooled connections. In particular, this prevents
+                    users changing the statement timeout to something longer :-).
+            </ul>
+            <p>This should at least secure the DB from casual attempts at taking it down. If you know of vulnerabilities
+                in these measures, please <a href="mailto:pgexercises@pgexercises.com">email me</a>.</p></div>
+    </div>
+    <div class="row aboutheader">
+        <div class="panel-body col-md-9"><a name="coding"></a>
+            <h3>I want to contribute/Your CSS sucks/I have a suggestion for the site code.</h3></div>
+    </div>
+    <div class="row aboutqstn">
+        <div class="panel-body col-md-8 offset1"><p>You can contribute at <a
+                href="https://github.com/AlisdairO/pgexercises">Github</a>. For minor corrections or more sweeping
+            suggestions, you can mail me at <a href="mailto:pgexercises@pgexercises.com">pgexercises@pgexercises.com</a>.
+            Sorry about the CSS :-).</p></div>
+    </div>
+    <div class="row aboutqstn">
+        <div class="panel-body col-md-8 offset1"></div>
+    </div>
+    <div class="row aboutheader">
+        <div class="panel-body col-md-9"><a name="writes"></a>
+            <h3>What about creates, updates, and deletes?</h3></div>
+    </div>
+    <div class="row aboutqstn">
+        <div class="panel-body col-md-8 offset1"><p>These are harder to do safely on a site like this, as having a bunch of users
+            concurrently modifying the same data just wouldn't work - quite apart from the security risks. At some point
+            in the distant future I hope to make a similar site that takes you through DDL and CRUD operations against a
+            database you set up yourself.</p></div>
+    </div>
+    <div class="row aboutheader">
+        <div class="panel-body col-md-9"><a name="tech"></a>
+            <h3>What technologies were used in this site?</h3></div>
+    </div>
+    <div class="row aboutqstn">
+        <div class="panel-body col-md-8 offset1"><p>I've used the following technologies as part of this site. Many thanks to all of
+            their contributors!</p>
+            <ul>
+                <li><a href="http://www.postgresql.org/">PostgreSQL</a>
+                <li><a href="http://nginx.org/">Nginx</a>
+                <li><a href="http://tomcat.apache.org/">Apache Tomcat</a>
+                <li><a href="http://twitter.github.io/bootstrap/">Bootstrap</a>
+                <li><a href="http://bootswatch.com/">Bootswatch</a>
+                <li><a href="http://wiki.postgresql.org/wiki/PgBouncer">PgBouncer</a>
+                <li><a href="http://pgfoundry.org/projects/pgtune/">pgtune</a>
+                <li><a href="http://jquery.com/">JQuery</a>
+                <li><a href="http://codemirror.net/">Code Mirror</a>
+                <li><a href="https://code.google.com/p/google-code-prettify/">Google Code Prettify</a>
+                <li><a href="http://noraesae.github.io/perfect-scrollbar/">Perfect Scrollbar</a>
+                <li><a href="http://krikus.com/js/splitter/">Krikus' JQuery splitter</a>
+            </ul>
+            <p>I also used the following tooling/sites:</p>
+            <ul>
+                <li><a href="http://www.vim.org/">Vim</a>
+                <li><a href="http://subversion.tigris.org/">Subversion</a>
+                <li><a href="http://www.eclipse.org/">Eclipse</a>
+                <li><a href="http://git-scm.com/">Git</a>
+                <li><a href="http://uptimerobot.com/">UptimeRobot</a>
+            </ul>
+            <p>And finally, thanks to user <a href="http://pixabay.com/en/users/Nemo/">Nemo</a> on Pixabay for producing
+                public domain artwork used on this site.</p></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>首页</title>
+    {% include '../sqltrainapp/include_CSS_JS.html' %}
+
+    <script>
+        function change_s_h(){
+            var y=document.getElementById("AnsDis");
+            x=document.getElementById("div_s_h");
+            if (y.innerHTML=="Show"){
+                y.innerHTML="Hide"
+                x.style.display="block";
+            }
+            else{
+                y.innerHTML="Show"
+                x.style.display="none";
+            }
+        }
+    </script>
+
+</head>
+<body>
+{% include '../sqltrainapp/include_head.html' %}
+
+<div class="container">
+
+    <section id="typography">
+        <div class="page-header">
+            <h1><span style="float:left"> Retrieve specific columns from a table </span> <span style="float:right"> <img
+                    src="../../assets/tick2.svg" class="headertick"></img> </span>
+                <div style="clear:both"></div>
+            </h1>
+        </div>
+        <div class="row" style="margin-bottom:10px">
+            <div class="panel-body col-md-8"><h3>Question</h3> You want to print out a list of all of the facilities and
+                their cost to
+                members. How would you retrieve a list of only facility names and costs?
+            </div>
+        </div>
+        <table class="panel-body col-md-12" border="1">
+            <tr>
+                <td colspan="2" align="left" valign="top"><h3>Schema reminder</h3>
+                    <img src="../../img/schema-horizontal.svg" alt="DB schema" width="840"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" width="50%" align="left" valign="top">
+                    <div style="display: inline-block">
+                    <h3>Expected Results</h3>
+                    <div style="width:auto; display:inline-block">
+                                        <table class="demo table table-bordered table-striped"
+                                               style="width:auto;">
+                                            <thead>
+                                            <tr>
+                                                <th>name</th>
+                                                <th>membercost</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Tennis Court 1</td>
+                                                <td>5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tennis Court 2</td>
+                                                <td>5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Badminton Court</td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Table Tennis</td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Massage Room 1</td>
+                                                <td>35</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Massage Room 2</td>
+                                                <td>35</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Squash Court</td>
+                                                <td>3.5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Snooker Table</td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pool Table</td>
+                                                <td>0</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <p>(9 rows) </p>
+                                        </div>
+                    </div>
+
+                </td>
+                <td  width="50%" height="20%" align="left" valign="top"><div><h3>Your Answer<span></span> <a
+                                    id="savebtn" class=" btn btn-primary btn-small" onClick="query();">Run Query</a></h3>
+                        <div style="clear:both;">
+                            <div id="codewrapper">
+                                <form><input type="text" id="code" name="code" class="form-control"></input></form>
+                            </div>
+                        </div>
+                     </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td align="left" valign="top"><div>
+                        <div>
+                            <div ondblclick="setOptimalYourResultsSize()">
+                                <div>
+                                    <spa>
+                                         <table id="yourresultstable"
+                                           class="demo table table-bordered table-striped"></table>
+                                    </spa>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="panel-body row" style="margin-bottom:30px">
+            <div class="col-md-12"><h3>Answers and Discussion <a id="AnsDis"
+                                                                 class="inactive btn btn-primary btn-small"
+                                                                 style="margin: 5px"
+                                                                 onClick="change_s_h();">Show</a>
+            </h3>
+                <div id="div_s_h" style="display: none">
+                <pre class="answerdiv col-md-7 lang-sql">select name, membercost from cd.facilities;</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

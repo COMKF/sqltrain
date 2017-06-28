@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>basic</title>
+    {% include '../include_CSS_JS.html' %}
+</head>
+<body>
+{% include '../include_head.html' %}
+<div class="container">
+    <div class="page-header"><h1> Working with Timestamps <a href="timestamp.html" class="btn btn-primary btn-large"
+                                                             style="margin-left: 50px;">Begin!</a></h1></div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="panel-body col-md-8"><p>
+            <p>Dates/Times in SQL are a complex topic, deserving of a category of their own. They're also fantastically
+                powerful, making it easier to work with variable-length concepts like 'months' than many programming
+                languages.</p>
+            <p>Before getting started on this category, it's probably worth taking a look over the PostgreSQL <a
+                    href="http://www.postgresql.org/docs/current/static/functions-datetime.html">docs page</a> on
+                date/time functions. You might also want to complete the aggregate functions category, since we'll use
+                some of those capabilities in this section.</p> </p> </div>
+    </div>
+    <div class="row" style="margin-bottom:30px">
+        <div class="col-md-8">
+            <ul class="topiclisting">
+                <li><span class="listingitem"><a class="listlink" href='timestamp.html'>Produce a timestamp for 1 a.m. on the 31st of August 2012</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='interval.html'>Subtract timestamps from each other</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='series.html'>Generate a list of all the dates in October 2012</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='extract.html'>Get the day of the month from a timestamp</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='interval2.html'>Work out the number of seconds between timestamps</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='daysinmonth.html'>Work out the number of days in each month of 2012</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='daysremaining.html'>Work out the number of days remaining in the month</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink"
+                                                 href='endtimes.html'>Work out the end time of bookings</a></span></li>
+                <li><span class="listingitem"><a class="listlink" href='bookingspermonth.html'>Return a count of bookings for each month</a></span>
+                </li>
+                <li><span class="listingitem"><a class="listlink" href='utilisationpermonth.html'>Work out the utilisation percentage for each facility by month</a></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

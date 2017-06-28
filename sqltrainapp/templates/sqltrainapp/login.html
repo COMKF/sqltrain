@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <title>登录</title>
+    <link href="../../static/sqltrainapp/css/signin.css" href="../../static/sqltrainapp/css/signin.css" rel="stylesheet">
+    {% include '../sqltrainapp/include_CSS_JS.html' %}
+
+</head>
+
+<body>
+
+<div class="container">
+    <form action="{% url 'sqltrainapp:login_detail' %}" class="form-signin" method="post">
+        {% csrf_token %} <!-- 这是一个防出错的标签，只要有表单，就加上它。 -->
+        <h2 class="form-signin-heading">请登录</h2>
+        <label for="user_name" class="sr-only">用户名</label>
+        <input name="user_name" type="text" id="user_name" class="form-control" placeholder="用户名" value="{{ user_name }}" required autofocus>
+        <label for="pwd" class="sr-only">密码</label>
+        <input name="pwd" type="password" id="pwd" class="form-control" placeholder="密码" required>
+        <div style="height: 25px">
+            <span style="color: red">{{ error.user_name.0 }}</span>
+            <span style="color: green">{{ msg }}</span>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+
+        <br>
+        <a href="{% url 'sqltrainapp:register' %}" class="text-center center-block">没有账号？现在注册</a>
+
+    </form>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'sqltrainapp:index' %}">PostgreSQL Exercises</a>
+        </div>
+        {% if  request.session.user_name  %}
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="{% url 'sqltrainapp:index' %}">Home</a></li>
+                <li><a href={% url 'sqltrainapp:Getting_Started' %}>Getting Started</a></li>
+
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Exercises<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      <li><a href="{% url 'sqltrainapp:basic' %}">Basic</a></li>
+                      <li><a href="{% url 'sqltrainapp:joins' %}">Joins and Subqueries</a></li>
+                      <li><a href="{% url 'sqltrainapp:aggregates' %}">Aggregates</a></li>
+                      <li><a href="{% url 'sqltrainapp:date' %}">Date</a></li>
+                      <li><a href="{% url 'sqltrainapp:string' %}">String</a></li>
+                      <li><a href="{% url 'sqltrainapp:recursive' %}">Recursive</a></li>
+
+{#                    <li role="separator" class="divider"></li>#}
+{#                    <li class="dropdown-header">Nav header</li>#}
+{#                    <li><a href="#">Separated link</a></li>#}
+{#                    <li><a href="#">One more separated link</a></li>#}
+                  </ul>
+                </li>
+                  <li><a href="{% url 'sqltrainapp:about' %}">About</a></li>
+                  <li><a href={% url 'sqltrainapp:options' %}>Options</a></li>
+              </ul>
+                    <div  class="navbar-right row" >
+                        <label class="navbar-text" style="color: white">欢迎你，{{ request.session.user_name }}</label>
+                        <form action="{% url 'sqltrainapp:logout' %}" class="navbar-form navbar-right" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">注销</button>
+                        </form>
+                    </div>
+            </div>
+
+            {% else %}
+        <div id="navbar" class="navbar-collapse collapse">
+                <form action="{% url 'sqltrainapp:login_detail' %}" class="navbar-form navbar-right" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input name="user_name" type="text" id="user_name" class="form-control" placeholder="用户名" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input name="user_password" type="password" id="user_password" class="form-control" placeholder="密码" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">登录</button>
+                </form>
+        </div>
+            {% endif %}
+
+       <!--/.navbar-collapse -->
+    </div>
+</nav>
