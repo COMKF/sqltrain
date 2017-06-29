@@ -1,7 +1,14 @@
+import json
+
 from django.shortcuts import render
 from .form import register_f, login_f
-from .models import User
-from django.http import HttpResponseRedirect
+from .models import User, Question, Doques
+from django.http import HttpResponseRedirect, HttpResponse
+from django.db import connection
+import operator
+
+
+
 
 def check(func):  # 使用装饰器验证用户登录
     def wrapper(*args, **kw):
@@ -21,8 +28,9 @@ def check(func):  # 使用装饰器验证用户登录
     return wrapper
 
 
-@check
+# @check
 def login(request):
+    print('[Info    ] you are login')
     return render(request, 'sqltrainapp/index.html')
 
 
@@ -91,6 +99,112 @@ def Getting_Started(request):
 @check
 def basic(request):
     return render(request, 'sqltrainapp/questions/basic.html')
+
+@check
+def selectall(request):
+    question = Question.objects.get(ques_type=101)
+    # question = Question.objects.all()
+    qid = question.ques_id
+    question_content = question.ques_content
+    sql = question.answer
+    print("[Info    ]" + sql)
+    print('[Info    ]' + str(qid))
+    #members = Question.objects.raw("SELECT * FROM sqltrainapp_question")    # [:] 注释这里就会从set变成list
+    # 返回的默认是list
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM sqltrainapp_question")
+    members = cursor.fetchall()
+    print('[Info    ]' + str(type(members)))    # <class 'django.db.models.query.RawQuerySet'>
+    # print('[Info    ]' + str(members))
+    # l = len(members)
+    for x in members:
+        print('[Info    ]' + str(x))
+    return render(request, 'sqltrainapp/questions/basic/selectall.html', {
+                                                    'members': members,
+                                                    'question_content': question_content,
+                                                    'sql_raw': sql,
+                                                    'qid':qid
+                                                     })
+
+# 运行用户提供的sql语句，将运行结果与参考答案的结果进行比较
+def result(request):
+    # django的SCUD可以跳过模型层，直接执行自定义的SQL
+    # 通过param和占位符，可以防止SQL注入攻击
+    # 如果sql语句中包含%，比如'38%'，要使用'38%%' 来正确的传递参数
+    print('[Info    ]you arrive result')
+    data1 = request.GET.get('a')  # 可以通过request获取post的form的id对应的数据
+    data2 = request.GET.get('b')
+    data3 = request.GET.get('c')
+    print('[Info    ]' + str(data1))  # 用户输入的sql
+    print('[Info    ]' + str(data2))  # 参考答案的sql
+    print('[Info    ]' + str(data3))
+    results = "OOPS! there has nothing"
+    if data1:
+        # 本来想传递members，但是不会用js传递这个members，这里传sql_raw，
+        # results = Members.objects.raw(data1)
+        cursor1 = connection.cursor()
+        # cursor1.execute(data2)
+        cursor1.execute("select * from sqltrainapp_question")
+        row1 = cursor1.fetchall()
+        print('[Info    ]' + str(type(row1)))
+        print('[Info    ]' + 'length: ' + str(len(row1)))
+        for x in row1:
+            print(x)
+
+        # 这里的结果是列表，而不是字段，所以是不带字段名称的, 当然也可以处理成key：value的形式
+        # 对用户输入的sql语句进行查询
+        cursor = connection.cursor()
+        cursor.execute(data1)
+        row = cursor.fetchall()
+        print('[Info    ]' + str(type(row)))
+        print('[Info    ]' + 'length: ' + str(len(row)))
+        for x in row:
+            print(x)
+
+        # 对两个结果进行比较，list之间的比较，如果相同就返回true，否则返回false
+        # false时在进一步比较哪里不同，给出不同的地方
+        cmpresult = operator.eq(row1, row)
+        if cmpresult==False :
+            pass
+        print('[Info    ]' + str(cmpresult))
+        # 对set进行比较，
+        # 先比较长度
+        # 再进行交集运算找出相同的set集合，然后就可以找出不同的地方
+
+        # 给出错误原因，提示信息，放入cmpresult，并写入数据库，需要传过来用户的id，问题的id，
+        # 写入 错误原因 及 用户的答案
+        uname=request.session.get('user_name')
+        print('[Info    ]' + str(uname))
+        # if uname :
+        #     user = User.objects.get(user_name=uname)
+        #     uid = user.user_id
+        #     qid = data3
+        #     answ = data1
+        #     result=cmpresult
+        #     d = Doques(someone=uid, someques=qid, answ_content=answ, result_type=result)
+        #     d.save()
+
+        # 返回查询结果和提示信息
+        ret = { 'result':row,
+                'cmpresult': cmpresult
+        }
+        return HttpResponse(json.dumps(ret), content_type='application/json')
+        #return HttpResponse(ret)
+
+    else:
+        print('[Info    ]Ok , you must enter sql')
+        ret = 'you must enter sqlstring'
+        return HttpResponse(ret)
+
+    print('[Info    ]' + str(type(results)))
+    for x in results:
+        print(x)
+        # print(x.surname)
+    # 到这里就得到了用户输入sql语句的结果
+    # 下面进行判断set<>是否相同，a,b  a-b
+    ret = results
+    return HttpResponse(ret)
+    # return render(request, 'train/result.html', {'results': results})
 
 
 @check
