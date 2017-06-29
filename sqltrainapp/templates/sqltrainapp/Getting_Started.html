@@ -11,7 +11,7 @@
     <div class="page-header"><h1>Getting Started</h1></div>
     <div class="row">
         <div class="panel-body col-md-8"><p>It's pretty simple to get going with the exercises: all you have to do is <a
-                href="questions/basic/">open the exercises</a>, take a look at the questions, and try to answer them!
+                href="{% url 'sqltrainapp:basic' %}">open the exercises</a>, take a look at the questions, and try to answer them!
         </p>
             <p>The dataset for these exercises is for a newly created country club, with a set of members, facilities
                 such as tennis courts, and booking history for those facilities. Amongst other things, the club wants to
@@ -91,7 +91,7 @@
             interesting challenges - as well as prepare you for the horror of working with some real-world databases
             :-).</p>
             <p>Okay, that should be all the information you need. You can select a category of query to try from the
-                menu above, or alternatively <a href="questions/basic/">start from the beginning</a>.</p></div>
+                menu above, or alternatively <a href="{% url 'sqltrainapp:basic' %}">start from the beginning</a>.</p></div>
     </div>
     <div class="row">
         <div class="panel-body col-md-8"><h3 style="margin-top:20px">I want to use my own Postgres system</h3>

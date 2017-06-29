@@ -1,12 +1,12 @@
 import json
-
-from django.shortcuts import render
-from .form import register_f, login_f
 from .models import User, Question, Doques
-from django.http import HttpResponseRedirect, HttpResponse
 from django.db import connection
 import operator
-
+from django.http import HttpResponse,HttpResponseRedirect
+from django.shortcuts import render
+from .form import register_f, login_f
+from .models import User
+from django.urls import reverse
 
 
 
@@ -31,7 +31,8 @@ def check(func):  # 使用装饰器验证用户登录
 # @check
 def login(request):
     print('[Info    ] you are login')
-    return render(request, 'sqltrainapp/index.html')
+    return render(request, 'sqltrainapp/login.html')
+
 
 
 def login_detail(request):
@@ -61,24 +62,25 @@ def register_detail(request):
         # 获取请求内容，做验证
         r = request.POST
         f = register_f(r)  # request.POST：将接收到的数据通过Form1验证
-        id = User.objects.raw("Select max(user_id) form User")
-        for x in id:
-            print(x)
+        user_name=r['user_name']
+        cls = r['cls']
 
-        u = User(user_name=r['user_name'], pwd=r['pwd'], user_type=2,
-                 school=r['school'], faculties=r['faculties'], cls=r['cls'])
         if f.is_valid():  # 验证请求的内容和Form里面的是否验证通过。通过是True，否则False。
+            id = int(User.objects.raw('Select user_id,max(user_id) from sqltrainapp_user')[0].user_id) + 1
+            u = User(user_id='%05d' % id,user_name=f.cleaned_data['user_name'], pwd=f.cleaned_data['pwd'], user_type=3,
+                     school=r['school'], faculties=r['faculties'], cls=r['cls'])
+
             # print("123123123",f.cleaned_data['user_name'])  # cleaned_data类型是字典，里面是提交成功后的信息。
             u.save()
             return render(request, 'sqltrainapp/login.html', {"msg": '注册成功，请登录'})
         else:  # 错误信息包含是否为空，或者符合正则表达式的规则
             print(type(f.errors), f.errors)  # errors类型是ErrorDict，里面是ul，li标签
-            return render(request, "sqltrainapp/register.html", {"error": f.errors, 'f': f, "user": u})
+            return render(request, "sqltrainapp/register.html", {"error": f.errors, 'f': f, "user_name": user_name,"cls":cls})
     else:
         return render(request, "sqltrainapp/register.html")
 
 
-@check
+# @check
 def logout(request):
     try:
         del request.session['user_name']
@@ -91,12 +93,12 @@ def index(request):
     return render(request, 'sqltrainapp/index.html')
 
 
-@check
+# @check
 def Getting_Started(request):
     return render(request, 'sqltrainapp/Getting_Started.html')
 
 
-@check
+# @check
 def basic(request):
     return render(request, 'sqltrainapp/questions/basic.html')
 
@@ -208,41 +210,58 @@ def result(request):
     # return render(request, 'train/result.html', {'results': results})
 
 
-@check
+# @check
 def joins(request):
     return render(request, 'sqltrainapp/questions/joins.html')
 
 
-@check
+# @check
 def aggregates(request):
     return render(request, 'sqltrainapp/questions/aggregates.html')
 
 
-@check
+# @check
 def date(request):
     return render(request, 'sqltrainapp/questions/date.html')
 
 
-@check
+# @check
 def string(request):
     return render(request, 'sqltrainapp/questions/string.html')
 
 
-@check
+# @check
 def recursive(request):
     return render(request, 'sqltrainapp/questions/recursive.html')
 
 
-@check
+# @check
 def about(request):
     return render(request, 'sqltrainapp/about.html')
 
 
-@check
+# @check
 def options(request):
     return render(request, 'sqltrainapp/options.html')
 
 
-@check
+# @check
 def moban(request):
     return render(request, 'sqltrainapp/moban.html')
+
+
+def personinfo(request,user_name):
+    if User.objects.filter(user_name=user_name):
+        u = User.objects.filter(user_name=user_name)[0]
+        if user_name == request.session.get('user_name'):
+            if u.user_type == 1:
+                pass
+            elif u.user_type == 2:
+                pass
+            elif u.user_type == 3:
+                pass
+            return HttpResponseRedirect(reverse('sqltrainapp:login'))
+        else:
+            return render(request, 'sqltrainapp/test.html')
+    else:
+        return HttpResponse("%s 用户不存在." % user_name)
