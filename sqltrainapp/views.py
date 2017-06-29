@@ -31,7 +31,7 @@ def check(func):  # 使用装饰器验证用户登录
 # @check
 def login(request):
     print('[Info    ] you are login')
-    return render(request, 'sqltrainapp/index.html')
+    return render(request, 'sqltrainapp/login.html')
 
 
 
