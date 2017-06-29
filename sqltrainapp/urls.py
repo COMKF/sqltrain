@@ -20,6 +20,9 @@ urlpatterns = [
     url(r'^string/$', views.string, name='string'),
     url(r'^recursive/$', views.recursive, name='recursive'),
 
+    url(r'^basic/selectall/$', views.selectall, name='selectall'),
+    url(r'^basic/result$', views.result, name='result'),
+
     url(r'^moban/$', views.moban, name='moban'),
 
     url(r'^about/$', views.about, name='about'),

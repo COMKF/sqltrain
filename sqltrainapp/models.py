@@ -41,7 +41,7 @@ class Question(models.Model):
 # 做题：某人、某题、开始答题时间（写答案开始）、结束答题时间（提交）、答题内容、占用内存、使用语言、运行结果（类型or内容）
 # 	int : 2 147 483 647
 class Doques(models.Model):
-    run_id = models.IntegerField(primary_key=True, unique=True)
+    run_id = models.AutoField(primary_key=True, unique=True)
 
     someone = models.ForeignKey(User, on_delete=models.CASCADE)
     someques = models.ForeignKey(Question, on_delete=models.CASCADE)
