@@ -133,8 +133,7 @@
                                          <table id="yourresultstable"
                                            class="demo table table-bordered table-striped">
                                                <tr><td id="myid1"></td></tr>
-                                               <tr><td id="myid2"></td></tr>
-                                               <div id="mydiv"></div>
+                                               <tr><div id="mydiv"></div></tr>
                                            </table>
                                     </spa>
                                 </div>
@@ -202,10 +201,8 @@
                             tab += "</tr>";
                         }
                         tab += "</table>";
-                        //alert(tab);
-                        //得到div标签
+                        //得到div标签,把table的代码设置到div里面去
                         var divv = document.getElementById("mydiv");
-                        //把table的代码设置到div里面去
                         divv.innerHTML = tab;
 
                     });
