@@ -25,28 +25,28 @@
         <div class="col-md-8">
             <ul>
                 <li><span>
-                    <a href='{% url 'sqltrainapp:selectall' %}'>Retrieve everything from a table</a></span>
+                    <a href='{% url 'sqltrainapp:basicall' 1%}'>Retrieve everything from a table</a></span>
                 </li>
                 <li><span>
-                    <a href='{% url 'sqltrainapp:moban' %}'>Retrieve specific columns from a table</a></span>
+                    <a href='{% url 'sqltrainapp:basicall' 2%}'>Retrieve specific columns from a table</a></span>
                 </li>
-                <li><span><a href='where.html'>Control which rows are retrieved</a></span>
+                <li><span><a href='{% url 'sqltrainapp:basicall' 3%}'>Control which rows are retrieved</a></span>
                 </li>
-                <li><span><a href='where2.html'>Control which rows are retrieved - part 2</a></span>
+                <li><span><a href='{% url 'sqltrainapp:basicall' 4%}'>Control which rows are retrieved - part 2</a></span>
                 </li>
-                <li><span><a href='where3.html'>Basic string searches</a></span>
+                <li><span><a href='{% url 'sqltrainapp:basicall' 5%}'>Basic string searches</a></span>
                 </li>
-                <li><span><a href='where4.html'>Matching against multiple possible values</a></span>
+                <li><span><a href='{% url 'sqltrainapp:basicall' 6%}'>Matching against multiple possible values</a></span>
                 </li>
-                <li><span><a href='classify.html'>Classify results into buckets</a></span>
+                <li><span><a href='{% url 'sqltrainapp:basicall' 7%}'>Classify results into buckets</a></span>
                 </li>
-                <li><span><a href='date.html'>Working with dates</a></span></li>
-                <li><span><a href='unique.html'>Removing duplicates, and ordering results</a></span>
+                <li><span><a href='{% url 'sqltrainapp:basicall' 8%}'>Working with dates</a></span></li>
+                <li><span><a href='{% url 'sqltrainapp:basicall' 9%}'>Removing duplicates, and ordering results</a></span>
                 </li>
-                <li><span><a href='union.html'>Combining results from multiple queries</a></span>
+                <li><span><a href='{% url 'sqltrainapp:basicall' 10%}'>Combining results from multiple queries</a></span>
                 </li>
-                <li><span><a href='agg.html'>Simple aggregation</a></span></li>
-                <li><span><a href='agg2.html'>More aggregation</a></span></li>
+                <li><span><a href='{% url 'sqltrainapp:basicall' 11%}'>Simple aggregation</a></span></li>
+                <li><span><a href='{% url 'sqltrainapp:basicall' 12%}'>More aggregation</a></span></li>
             </ul>
         </div>
     </div>

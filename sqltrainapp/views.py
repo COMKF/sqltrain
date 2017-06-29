@@ -101,8 +101,8 @@ def basic(request):
     return render(request, 'sqltrainapp/questions/basic.html')
 
 @check
-def selectall(request):
-    question = Question.objects.get(ques_type=101)
+def basicall(request, question_id):
+    question = Question.objects.get(ques_id=question_id)
     # question = Question.objects.all()
     qid = question.ques_id
     question_content = question.ques_content
@@ -125,6 +125,7 @@ def selectall(request):
                                                     'sql_raw': sql,
                                                     'qid':qid
                                                      })
+
 
 # 运行用户提供的sql语句，将运行结果与参考答案的结果进行比较
 def result(request):
