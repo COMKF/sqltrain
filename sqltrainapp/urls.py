@@ -27,6 +27,9 @@ urlpatterns = [
 
     url(r'^about/$', views.about, name='about'),
     url(r'^options/$', views.options, name='options'),
+
+
+    url(r'^personinfo/(?P<user_name>.+)/$', views.personinfo, name='personinfo'),
     # url(r'^Getting_Started/$', views.Getting_Started, name='Getting_Started'),
     # url(r'^Getting_Started/$', views.Getting_Started, name='Getting_Started'),
     # url(r'^Getting_Started/$', views.Getting_Started, name='Getting_Started'),
