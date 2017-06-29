@@ -7,4 +7,4 @@
 *.egg-info
 dist
 build
-db.sqlite3
+db.sqli*

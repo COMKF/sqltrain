@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>首页</title>
+    {% include './include_CSS_JS.html' %}
+
+    <script>
+        function change_s_h(){
+            var y=document.getElementById("AnsDis");
+            x=document.getElementById("div_s_h");
+            if (y.innerHTML=="Show"){
+                y.innerHTML="Hide"
+                x.style.display="block";
+            }
+            else{
+                y.innerHTML="Show"
+                x.style.display="none";
+            }
+        }
+    </script>
+
+</head>
+<body>
+{% include '../../include_head.html' %}
+
+<div class="container">
+
+    <section id="typography">
+        <div class="page-header">
+            <h1><span style="float:left"> Retrieve specific columns from a table </span> <span style="float:right"> <img
+                    src="../../assets/tick2.svg" class="headertick"></img> </span>
+                <div style="clear:both"></div>
+            </h1>
+        </div>
+        <div class="row" style="margin-bottom:10px">
+            <div class="panel-body col-md-8">
+            {%  if question_content %}
+                <h3>Question</h3>{{ question_content }}
+            {% else %}
+                <h3>Hello<p>Not exist</p></h3>
+            {% endif%}
+
+            <!--<h3>Question</h3>
+            You want to print out a list of all of the facilities and
+                their cost to
+                members. How would you retrieve a list of only facility names and costs?
+             -->
+            </div>
+        </div>
+        <table class="panel-body col-md-12" border="1">
+            <tr>
+                <td colspan="2" align="left" valign="top"><h3>Schema reminder</h3>
+                    <img src="../../img/schema-horizontal.svg" alt="DB schema" width="840"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" width="50%" align="left" valign="top">
+                    <div style="display: inline-block">
+                    <h3>Expected Results</h3>
+                    <div style="width:auto; display:inline-block">
+                                        <table class="demo table table-bordered table-striped"
+                                               style="width:auto;">
+                                            <thead>
+                                            <tr>
+                                                <th>name</th>
+                                                <th>membercost</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Tennis Court 1</td>
+                                                <td>5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tennis Court 2</td>
+                                                <td>5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Badminton Court</td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Table Tennis</td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Massage Room 1</td>
+                                                <td>35</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Massage Room 2</td>
+                                                <td>35</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Squash Court</td>
+                                                <td>3.5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Snooker Table</td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pool Table</td>
+                                                <td>0</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <p>(9 rows) </p>
+                                        </div>
+                    </div>
+
+                </td>
+                <td  width="50%" height="20%" align="left" valign="top"><div><h3>Your Answer<span></span> <a
+                                    id="savebtn" class=" btn btn-primary btn-small" onClick="query();">Run Query</a></h3>
+                        <div style="clear:both;">
+                            <div id="codewrapper">
+                                <form id="form1">
+                                    <input type="text" id="code" name="code" class="form-control"></input>
+                                </form>
+                            </div>
+                        </div>
+                     </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td align="left" valign="top"><div>
+                        <div>
+                            <div ondblclick="setOptimalYourResultsSize()">
+                                <div>
+                                    <spa>
+                                         <table id="yourresultstable"
+                                           class="demo table table-bordered table-striped">
+                                               <tr><td id="myid1"></td></tr>
+                                               <tr><td id="myid2"></td></tr>
+                                               <div id="mydiv"></div>
+                                           </table>
+                                    </spa>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="panel-body row" style="margin-bottom:30px">
+            <div class="col-md-12"><h3>Answers and Discussion <a id="AnsDis"
+                                                                 class="inactive btn btn-primary btn-small"
+                                                                 style="margin: 5px"
+                                                                 onClick="change_s_h();">Show</a>
+            </h3>
+                <div id="div_s_h" style="display: none">
+                <pre class="answerdiv col-md-7 lang-sql">
+                {% if sql_raw %}
+                    <p id="sql_id">{{ qid }}</p>
+                    <p id="sql">{{ sql_raw }}</p>
+                {% endif %}
+
+                <!--
+                select name, membercost from cd.facilities;
+                -->
+
+                </pre>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+    <script type="text/javascript">
+        function query(){
+                    //alert('submit');
+                    var data1 = $("#code").val();
+                    var data2 = $("#sql").text();
+                    var data3 = $("#sql_id").text();
+                    alert(data1 + '---' + data2 + '---' + data3)
+                    // 对sql的合法性进行肩检查
+                    $.getJSON("{% url 'sqltrainapp:result' %}",{'a':data1,'b':data2, 'c':data3}, function(ret){
+                        console.log(ret);
+                        getcmpresult = ret.cmpresult
+                        getresult = ret.result
+                        alert(getresult)
+                        console.log(getresult)
+                        $('#myid1').html(getcmpresult);
+                        $('#myid2').html(getresult);
+
+                        var h = getresult.length
+                        var l = getresult[0].length
+                        //把表格代码放到一个变量里面
+                        var tab = "<table border='1' bordercolor='blue'>";
+                        //循环行 array[i]
+                        for(var i=1;i<=h;i++) {
+                            tab += "<tr>";
+                            //循环单元格 array[i][j]
+                            for(var j=1;j<=l;j++) {
+                               // tab += "<td>" + getresult[i-1][j-1] + "</td>";
+                                tab += "<td>";
+                                tab += getresult[i-1][j-1]
+                                tab += "</td>";
+                            }
+                            tab += "</tr>";
+                        }
+                        tab += "</table>";
+                        //alert(tab);
+                        //得到div标签
+                        var divv = document.getElementById("mydiv");
+                        //把table的代码设置到div里面去
+                        divv.innerHTML = tab;
+
+                    });
+         }
+    </script>
+</body>
+</html>
