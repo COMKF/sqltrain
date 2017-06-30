@@ -3,6 +3,7 @@ from .models import User
 from django.core.exceptions import ValidationError
 import re
 
+
 # 登录验证
 class login_f(forms.Form):
     user_name = forms.CharField()
@@ -14,19 +15,18 @@ class login_f(forms.Form):
         if User.objects.filter(user_name=user_name) and User.objects.get(user_name=user_name).pwd == pwd:
             pass
         else:
-            self.add_error("user_name",'用户名或密码错误')
+            self.add_error("user_name", '用户名或密码错误')
             raise forms.ValidationError('')
         return self.cleaned_data
-
 
 
 class register_f(forms.Form):
     user_name = forms.CharField(label='user_name', min_length=4, max_length=15,
                                 error_messages={'min_length' or 'max_length': "用户名的长度在4-15个字符内"})
     pwd = forms.CharField(min_length=6, max_length=40, required=True,
-                                    error_messages={'min_length' or 'max_length': "密码的长度在6-40个字符内"})
+                          error_messages={'min_length' or 'max_length': "密码的长度在6-40个字符内"})
     pwd2 = forms.CharField(min_length=6, max_length=40, required=True,
-                                     error_messages={'min_length' or 'max_length': "密码的长度在6-40个字符内"})
+                           error_messages={'min_length' or 'max_length': "密码的长度在6-40个字符内"})
 
     # 从这里分界，上面是基本验证，下面是特殊验证。只有基本验证通过类，才会进行特殊验证。
 
@@ -49,6 +49,34 @@ class register_f(forms.Form):
 
     # @property
     def clean(self):  # 事实证明，验证两个密码一致，必须在这个函数里，因为只有这个函数能取得所有的值
+        pwd = self.cleaned_data.get('pwd')
+        pwd2 = self.cleaned_data.get('pwd2')
+        if pwd != pwd2:
+            self.add_error('pwd', '两次输入密码不匹配')
+            # 添加自定义错误，并绑定到 user_password2 (必须绑定在字段上，而不能随意定义一个变量名) 上，可以被error.user_password2调用
+            raise forms.ValidationError('')  # 这个也不能少
+        return self.cleaned_data  # 注意此处一定要return clean_data,否则会报错
+
+
+class changepwd_f(forms.Form):
+    user_name = forms.CharField()
+    yuan_pwd = forms.CharField(min_length=6, max_length=40, required=True,
+                               error_messages={'min_length' or 'max_length': "密码的长度在6-40个字符内"})
+    pwd = forms.CharField(min_length=6, max_length=40, required=True,
+                          error_messages={'min_length' or 'max_length': "密码的长度在6-40个字符内"})
+    pwd2 = forms.CharField(min_length=6, max_length=40, required=True,
+                           error_messages={'min_length' or 'max_length': "密码的长度在6-40个字符内"})
+
+    def clean(self):
+        user_name = self.cleaned_data.get('user_name')
+        yuan_pwd = self.cleaned_data.get('yuan_pwd')
+        print(user_name)
+        print(User.objects.get(user_name=user_name).pwd)
+        if User.objects.get(user_name=user_name).pwd == yuan_pwd:
+            pass
+        else:
+            self.add_error("yuan_pwd", '原始密码错误')
+
         pwd = self.cleaned_data.get('pwd')
         pwd2 = self.cleaned_data.get('pwd2')
         if pwd != pwd2:

@@ -23,7 +23,6 @@
                   <li><a href={% url 'sqltrainapp:options' %}>Options</a></li>
               </ul>
             {% if  request.session.user_name  %}
-                request.session.user_name
                     <div  class="navbar-right row" >
                         <label class="navbar-text" style="color: white">欢迎你，<a href="{% url 'sqltrainapp:personinfo' request.session.user_name %}">{{ request.session.user_name }}</a></label>
                         <form action="{% url 'sqltrainapp:logout' %}" class="navbar-form navbar-right" method="post">
@@ -38,7 +37,7 @@
                         <input name="user_name" type="text" id="user_name" class="form-control" placeholder="用户名" required autofocus>
                     </div>
                     <div class="form-group">
-                        <input name="user_password" type="password" id="user_password" class="form-control" placeholder="密码" required>
+                        <input name="pwd" type="password" id="user_password" class="form-control" placeholder="密码" required>
                     </div>
                     <button type="submit" class="btn btn-success">登录</button>
                 </form>

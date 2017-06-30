@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>admin</title>
+    {% include './include_CSS_JS.html' %}
+    <script>
+    function validate(){
+        var newtype = confirm("确定提升权限？");
+        if(newtype){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    function validate_delete(){
+        var newtype = confirm("确定删除？");
+        if(newtype){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    </script>
+</head>
+
+<body>
+{% include '../include_head.html' %}
+
+    <div class="container-fluid">
+      <div class="row">
+        {% include './include_sidebar.html' %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            <div class="panel panel-primary col-sm-10">
+            <div class="panel-heading">
+              <h3 class="panel-title">查看学生</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group">
+                    <div class="row">
+                        <div class="pull-left">
+                        <form action="{% url 'sqltrainapp:T_select_S' %}" method="post" >
+                            {% csrf_token %}
+                            <select name="selection" class="form-text-control">
+                                <option value="user_id" selected>ID</option>
+                                <option value="user_name">学生名称</option>
+                            </select>
+                            <input class="form-text-control" name="key" type="text" placeholder="可查询ID或学生名称">
+                            <input class="btn btn-primary" type="submit" value="查询">
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            {% if list %}
+                <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>学生名称</th>
+                    <th>所在学校</th>
+                    <th>所在院系</th>
+                    <th>所在班级</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for s in list %}
+                    <tr>
+                        <td>{{ s.user_id }}</td>
+                        <td><a href="{% url 'sqltrainapp:personinfo' s.user_name %}">{{ s.user_name }}</a></td>
+                        <td>{{ s.school }}</td>
+                        <td>{{ s.faculties }}</td>
+                        <td>{{ s.cls }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+            {% else %}
+                没有学生。
+            {% endif %}
+            <span style="color: green">{{ msg }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

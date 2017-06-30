@@ -54,7 +54,7 @@ class Doques(models.Model):
     result_type = models.CharField(max_length=2)
 
     def __str__(self):
-        return self.run_id
+        return str(self.run_id)
 
 
 

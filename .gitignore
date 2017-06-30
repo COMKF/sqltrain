@@ -8,4 +8,4 @@
 dist
 build
 db.sqli*
-#__pycache__/
+__pycache__/
