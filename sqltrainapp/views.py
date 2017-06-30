@@ -507,6 +507,5 @@ def T_select_Q(request):
             list = list.filter(ques_id=key)
         if selection == 'ques_title':
             list = list.filter(ques_title__contains=key)
-
     user = User.objects.get(user_name=request.session.get('user_name'))
     return render(request, 'sqltrainapp/personinfo/T_show_Q.html', {'list': list, 'user': user})
