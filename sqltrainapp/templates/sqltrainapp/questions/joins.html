@@ -23,22 +23,16 @@
     <div class="row" style="margin-bottom:30px">
         <div class="col-md-8">
             <ul>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 13%}'>Retrieve the start times of members' bookings</a></span>
+               {% if joinquestion %}
+                    {% for x in joinquestion %}
+                        <li><span>
+                            <a href='{% url 'sqltrainapp:basicall' x.ques_id %}'>{{ x.ques_title }}</a></span>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li><span><P>Couldn't find the question list</P></span>
                 </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 14%}'>Work out the start times of bookings for tennis courts</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 15%}'>Produce a list of all members who have recommended another member</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 16%}'>Produce a list of all members, along with their recommender</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 17%}'>Produce a list of all members who have used a tennis court</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 18%}'>Produce a list of costly bookings</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 19%}'>Produce a list of all members, along with their recommender, using no joins.</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 20%}'>Produce a list of costly bookings, using a subquery</a></span>
-                </li>
+                {% endif %}
             </ul>
         </div>
     </div>

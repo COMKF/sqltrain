@@ -22,25 +22,16 @@
     <div class="row" style="margin-bottom:30px">
         <div class="col-md-8">
             <ul class="topiclisting">
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 43%}'v>Produce a timestamp for 1 a.m. on the 31st of August 2012</a></span>
+                {% if datequestion %}
+                    {% for x in datequestion %}
+                        <li><span>
+                            <a href='{% url 'sqltrainapp:basicall' x.ques_id %}'>{{ x.ques_title }}</a></span>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li><span><P>Couldn't find the question list</P></span>
                 </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 44%}'>Subtract timestamps from each other</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 45%}'>Generate a list of all the dates in October 2012</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 46%}'>Get the day of the month from a timestamp</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 47%}'>Work out the number of seconds between timestamps</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 48%}'>Work out the number of days in each month of 2012</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 49%}'>Work out the number of days remaining in the month</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 50%}'>Work out the end time of bookings</a></span></li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 51%}'>Return a count of bookings for each month</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 52%}'>Work out the utilisation percentage for each facility by month</a></span>
-                </li>
+                {% endif %}
             </ul>
         </div>
     </div>

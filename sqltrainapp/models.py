@@ -29,7 +29,7 @@ class Question(models.Model):
     ques_type = models.CharField(max_length=10)
     ques_title = models.CharField(max_length=200)
     ques_content = models.CharField(max_length=800)
-    answer = models.CharField(max_length=500)
+    answer = models.CharField(max_length=700)
     level = models.CharField(max_length=2)
 
     passnum = models.IntegerField()

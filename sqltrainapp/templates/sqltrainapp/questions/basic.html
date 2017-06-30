@@ -24,29 +24,16 @@
     <div class="row">
         <div class="col-md-8">
             <ul>
-                <li><span>
-                    <a href='{% url 'sqltrainapp:basicall' 1%}'>Retrieve everything from a table</a></span>
+                {% if basicquestion %}
+                    {% for x in basicquestion %}
+                        <li><span>
+                            <a href='{% url 'sqltrainapp:basicall' x.ques_id %}'>{{ x.ques_title }}</a></span>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li><span><P>Couldn't find the question list</P></span>
                 </li>
-                <li><span>
-                    <a href='{% url 'sqltrainapp:basicall' 2%}'>Retrieve specific columns from a table</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 3%}'>Control which rows are retrieved</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 4%}'>Control which rows are retrieved - part 2</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 5%}'>Basic string searches</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 6%}'>Matching against multiple possible values</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 7%}'>Classify results into buckets</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 8%}'>Working with dates</a></span></li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 9%}'>Removing duplicates, and ordering results</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 10%}'>Combining results from multiple queries</a></span>
-                </li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 11%}'>Simple aggregation</a></span></li>
-                <li><span><a href='{% url 'sqltrainapp:basicall' 12%}'>More aggregation</a></span></li>
+                {% endif %}
             </ul>
         </div>
     </div>
