@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 # 用户：用户名、密码、用户类型（编号or名称）、学校(编号or名称)、专业（编号or名称）、班级（编号or名称）
@@ -46,8 +45,8 @@ class Doques(models.Model):
     someone = models.ForeignKey(User, on_delete=models.CASCADE)
     someques = models.ForeignKey(Question, on_delete=models.CASCADE)
 
-    start_time = models.DateTimeField
-    end_time = models.DateTimeField
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
     answ_content = models.CharField(max_length=1000)
     memory = models.CharField(max_length=10)
     language_type = models.CharField(max_length=2)
