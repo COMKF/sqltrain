@@ -9,3 +9,5 @@ dist
 build
 db.sqli*
 #__pycache__/
+localwork
+migrations

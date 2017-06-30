@@ -5,7 +5,6 @@ import operator
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render
 from .form import register_f, login_f
-from .models import User
 from django.urls import reverse
 
 
@@ -100,6 +99,7 @@ def Getting_Started(request):
 
 # @check
 def basic(request):
+    # 根据问题类型，将basic下所有问题取出，然后返回，在basic.html中填充url+question_id地址
     return render(request, 'sqltrainapp/questions/basic.html')
 
 @check
@@ -196,17 +196,19 @@ def result(request):
 
     else:
         print('[Info    ]Ok , you must enter sql')
-        ret = 'you must enter sqlstring'
-        return HttpResponse(ret)
+        ret = {
+            'cmpresult':'you must enter sqlstring'
+        }
+        return HttpResponse(json.dump(ret), content_type='application/json')
 
-    print('[Info    ]' + str(type(results)))
-    for x in results:
-        print(x)
-        # print(x.surname)
-    # 到这里就得到了用户输入sql语句的结果
-    # 下面进行判断set<>是否相同，a,b  a-b
-    ret = results
-    return HttpResponse(ret)
+    # print('[Info    ]' + str(type(results)))
+    # for x in results:
+    #     print(x)
+    #     # print(x.surname)
+    # # 到这里就得到了用户输入sql语句的结果
+    # # 下面进行判断set<>是否相同，a,b  a-b
+    # ret = results
+    # return HttpResponse(ret)
     # return render(request, 'train/result.html', {'results': results})
 
 
@@ -265,3 +267,4 @@ def personinfo(request,user_name):
             return render(request, 'sqltrainapp/test.html')
     else:
         return HttpResponse("%s 用户不存在." % user_name)
+

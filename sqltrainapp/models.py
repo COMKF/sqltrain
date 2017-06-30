@@ -7,7 +7,7 @@ from django.db import models
 # primary_key 指定主键
 # Meta 指定表名称
 class User(models.Model):
-    user_id = models.CharField(max_length=50, primary_key=True, unique=True)
+    user_id = models.AutoField(primary_key=True, unique=True)
 
     user_name = models.CharField(max_length=20)
     pwd = models.CharField(max_length=20)
@@ -24,7 +24,7 @@ class User(models.Model):
 
 # 题目：类型(标示12个专业不同课程的内容)、标题、内容、参考答案、难度等级、通过人数、做这道题的总人数
 class Question(models.Model):
-    ques_id = models.CharField(max_length=20, primary_key=True, unique=True) # 使用django默认的id也可以
+    ques_id = models.AutoField( primary_key=True,  verbose_name='ID') # 使用django默认的id也可以
 
     ques_type = models.CharField(max_length=10)
     ques_title = models.CharField(max_length=200)
@@ -32,8 +32,8 @@ class Question(models.Model):
     answer = models.CharField(max_length=500)
     level = models.CharField(max_length=2)
 
-    passnum = models.CharField(max_length=6)
-    totalnum = models.CharField(max_length=6)
+    passnum = models.IntegerField()
+    totalnum = models.IntegerField()
 
     def __str__(self):
         return self.ques_title
