@@ -24,50 +24,16 @@
     <div class="row" style="margin-bottom:30px">
         <div class="col-md-8">
             <ul class="topiclisting">
-                <li><span class="listingitem"><a class="listlink"
-                                                 href='{% url 'sqltrainapp:basicall' 21%}'>Count the number of facilities</a></span></li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 22%}'>Count the number of expensive facilities</a></span>
+                {% if aggregatesquestion %}
+                    {% for x in aggregatesquestion %}
+                        <li><span>
+                            <a href='{% url 'sqltrainapp:basicall' x.ques_id %}'>{{ x.ques_title }}</a></span>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li><span><P>Couldn't find the question list</P></span>
                 </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 23%}'>Count the number of recommendations each member makes.</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 24%}'>List the total slots booked per facility</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 25%}'>List the total slots booked per facility in a given month</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 26%}'>List the total slots booked per facility per month</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 27%}'Find the count of members who have made at least one booking</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 28%}'>List facilities with more than 1000 slots booked</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 29%}'>Find the total revenue of each facility</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 30%}'>Find facilities with a total revenue less than 1000</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 31%}'>Output the facility id that has the highest number of slots booked</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 32%}'>List the total slots booked per facility per month, part 2</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 33%}'>List the total hours booked per named facility</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 34%}'>List each member's first booking after September 1st 2012</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 35%}'>Produce a list of member names, with each row containing the total member count</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 36%}'>Produce a numbered list of members</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 37%}'>Output the facility id that has the highest number of slots booked, again</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 38%}'>Rank members by (rounded) hours used</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 39%}'>Find the top three revenue generating facilities</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 40%}'>Classify facilities by value</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 41%}'>Calculate the payback time for each facility</a></span>
-                </li>
-                <li><span class="listingitem"><a class="listlink" href='{% url 'sqltrainapp:basicall' 42%}'>Calculate a rolling average of total revenue</a></span>
-                </li>
+                {% endif %}
             </ul>
         </div>
     </div>

@@ -100,7 +100,13 @@ def Getting_Started(request):
 # @check
 def basic(request):
     # 根据问题类型，将basic下所有问题取出，然后返回，在basic.html中填充url+question_id地址
-    return render(request, 'sqltrainapp/questions/basic.html')
+    base = Question.objects.filter(ques_type='0812020101')
+    # cursor = connection.cursor()
+    # cursor.execute("SELECT * FROM sqltrainapp_question WHERE ques_type='0812020101'")
+    # base = cursor.fetchall()
+    # for x in base:
+    #      print(x)
+    return render(request, 'sqltrainapp/questions/basic.html', {'basicquestion':base})
 
 @check
 def basicall(request, question_id):
@@ -211,30 +217,34 @@ def result(request):
     # return HttpResponse(ret)
     # return render(request, 'train/result.html', {'results': results})
 
-
 # @check
 def joins(request):
-    return render(request, 'sqltrainapp/questions/joins.html')
+    base = Question.objects.filter(ques_type='0812020102')
+    return render(request, 'sqltrainapp/questions/joins.html', {'joinquestion':base})
 
 
 # @check
 def aggregates(request):
-    return render(request, 'sqltrainapp/questions/aggregates.html')
+    base = Question.objects.filter(ques_type='0812020103')
+    return render(request, 'sqltrainapp/questions/aggregates.html', {'aggregatesquestion':base})
 
 
 # @check
 def date(request):
-    return render(request, 'sqltrainapp/questions/date.html')
+    base = Question.objects.filter(ques_type='0812020104')
+    return render(request, 'sqltrainapp/questions/date.html', {'datequestion': base})
 
 
 # @check
 def string(request):
-    return render(request, 'sqltrainapp/questions/string.html')
+    base = Question.objects.filter(ques_type='0812020105')
+    return render(request, 'sqltrainapp/questions/string.html', {'stringquestion': base})
 
 
 # @check
 def recursive(request):
-    return render(request, 'sqltrainapp/questions/recursive.html')
+    base = Question.objects.filter(ques_type='0812020106')
+    return render(request, 'sqltrainapp/questions/recursive.html', {'recursivequestion': base})
 
 
 # @check
