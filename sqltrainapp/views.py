@@ -1,4 +1,7 @@
 import json
+
+import django.utils
+
 from .models import User, Question, Doques
 from django.db import connection
 import operator
@@ -6,6 +9,9 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render
 from .form import register_f, login_f
 from django.urls import reverse
+
+import datetime
+
 
 
 
@@ -125,8 +131,8 @@ def basicall(request, question_id):
     print('[Info    ]' + str(type(members)))    # <class 'django.db.models.query.RawQuerySet'>
     # print('[Info    ]' + str(members))
     # l = len(members)
-    for x in members:
-        print('[Info    ]' + str(x))
+    # for x in members:
+    #     print('[Info    ]' + str(x))
     return render(request, 'sqltrainapp/questions/basic/selectall.html', {
                                                     'members': members,
                                                     'question_content': question_content,
@@ -157,8 +163,8 @@ def result(request):
         row1 = cursor1.fetchall()
         print('[Info    ]' + str(type(row1)))
         print('[Info    ]' + 'length: ' + str(len(row1)))
-        for x in row1:
-            print(x)
+        # for x in row1:
+        #     print(x)
 
         # 这里的结果是列表，而不是字段，所以是不带字段名称的, 当然也可以处理成key：value的形式
         # 对用户输入的sql语句进行查询
@@ -167,8 +173,8 @@ def result(request):
         row = cursor.fetchall()
         print('[Info    ]' + str(type(row)))
         print('[Info    ]' + 'length: ' + str(len(row)))
-        for x in row:
-            print(x)
+        # for x in row:
+        #     print(x)
 
         # 对两个结果进行比较，list之间的比较，如果相同就返回true，否则返回false
         # false时在进一步比较哪里不同，给出不同的地方
@@ -184,14 +190,27 @@ def result(request):
         # 写入 错误原因 及 用户的答案
         uname=request.session.get('user_name')
         print('[Info    ]' + str(uname))
-        # if uname :
-        #     user = User.objects.get(user_name=uname)
-        #     uid = user.user_id
-        #     qid = data3
-        #     answ = data1
-        #     result=cmpresult
-        #     d = Doques(someone=uid, someques=qid, answ_content=answ, result_type=result)
-        #     d.save()
+        if uname :
+             user = User.objects.get(user_name=uname)
+             uid = user.user_id
+             u = User.objects.get(user_id=uid)
+             q = Question.objects.get(ques_id=data3)
+             answ = data1
+             result=cmpresult
+             # stime = datetime.datetime.now()
+             # stime2 = datetime.datetime.utcnow() + datetime.timedelta(hours=8.0)
+             # stime = django.utils.timezone.now() + datetime.timedelta(hours=8.0)
+             # print('[Info   ]' + str(stime))
+             # print('[Info   ]' + str(stime2))
+
+             d = Doques.objects.create(someone=u,
+                                       someques=q,
+                                       answ_content=answ,
+                                       result_type=result,
+                                       start_time=datetime.datetime.now() + datetime.timedelta(hours=8.0),
+                                       end_time=datetime.datetime.now() + datetime.timedelta(hours=8.0)
+                                       )
+             d.save()
 
         # 返回查询结果和提示信息
         ret = { 'result':row,
