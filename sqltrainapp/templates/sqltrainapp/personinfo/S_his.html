@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>admin</title>
+    {% include './include_CSS_JS.html' %}
+    <script>
+    function validate(){
+        var newtype = confirm("确定提升权限？");
+        if(newtype){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    function validate_delete(){
+        var newtype = confirm("确定删除？");
+        if(newtype){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    </script>
+</head>
+
+<body>
+{% include '../include_head.html' %}
+
+    <div class="container-fluid">
+      <div class="row">
+        {% include './include_sidebar.html' %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            <div class="panel panel-primary col-sm-10">
+            <div class="panel-heading">
+              <h3 class="panel-title">历史记录</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group">
+                    <div class="row">
+                        <div class="pull-left">
+                        <form action="{% url 'sqltrainapp:S_his' %}" method="post" >
+                            {% csrf_token %}
+                            <select name="selection" class="form-text-control">
+                                <option value="run_id" selected>ID</option>
+                                <option value="answ_content">回答内容</option>
+                            </select>
+                            <input class="form-text-control" name="key" type="text" placeholder="可查询ID或回答内容">
+                            <input class="btn btn-primary" type="submit" value="查询">
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            {% if list %}
+                <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>问题ID</th>
+                    <th>回答内容</th>
+                    <th>使用内存</th>
+                    <th>使用语言</th>
+                    <th>运行结果</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for d in list %}
+                    <tr>
+                        <td>{{ d.run_id }}</td>
+                        <td>{{ d.someques_id }}</td>
+                        <td>{{ d.answ_content }}</td>
+                        <td>{{ d.memory }}</td>
+                        <td>{{ d.language_type }}</td>
+                        <td>{{ d.result_type }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+            {% else %}
+                没有题目。
+            {% endif %}
+            <span style="color: green">{{ msg }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
