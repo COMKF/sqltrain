@@ -25,14 +25,16 @@ class User(models.Model):
 class Question(models.Model):
     ques_id = models.AutoField( primary_key=True,  verbose_name='ID') # 使用django默认的id也可以
 
+    submit_user = models.ForeignKey(User, on_delete=models.CASCADE,default=0)
+
     ques_type = models.CharField(max_length=10)
     ques_title = models.CharField(max_length=200)
     ques_content = models.CharField(max_length=800)
     answer = models.CharField(max_length=700)
     level = models.CharField(max_length=2)
 
-    passnum = models.IntegerField()
-    totalnum = models.IntegerField()
+    passnum = models.IntegerField(default=0)
+    totalnum = models.IntegerField(default=0)
 
     def __str__(self):
         return self.ques_title
@@ -45,8 +47,8 @@ class Doques(models.Model):
     someone = models.ForeignKey(User, on_delete=models.CASCADE)
     someques = models.ForeignKey(Question, on_delete=models.CASCADE)
 
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start_time = models.DateTimeField(null=True)
+    end_time = models.DateTimeField(null=True)
     answ_content = models.CharField(max_length=1000)
     memory = models.CharField(max_length=10)
     language_type = models.CharField(max_length=2)

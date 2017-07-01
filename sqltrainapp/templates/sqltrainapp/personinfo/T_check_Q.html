@@ -4,8 +4,8 @@
     <title>admin</title>
     {% include './include_CSS_JS.html' %}
     <script>
-    function validate(){
-        var newtype = confirm("确定撤销权限？");
+    function validate_pass(){
+        var newtype = confirm("确定通过该题目？");
         if(newtype){
             return true;
         }
@@ -13,8 +13,8 @@
             return false;
         }
     }
-    function validate_delete(){
-        var newtype = confirm("确定删除？");
+    function validate_fail(){
+        var newtype = confirm("确定放弃该题目？");
         if(newtype){
             return true;
         }
@@ -35,15 +35,15 @@
 
             <div class="panel panel-primary col-sm-10">
             <div class="panel-heading">
-              <h3 class="panel-title">教师管理</h3>
+              <h3 class="panel-title">审核题目</h3>
             </div>
             <div class="panel-body">
-            <div class="panel-group">
+                <div class="panel-group">
                     <div class="row">
                         <div class="pull-left">
-                        <form action="{% url 'sqltrainapp:A_manage_T' %}" method="post" >
+                        <form action="{% url 'sqltrainapp:T_check_Q' %}" method="post" >
                             {% csrf_token %}
-                            {% include './include_Select_TorS.html' %}
+                            {% include './include_Select_Q.html' %}
                         </form>
                         </div>
                     </div>
@@ -54,38 +54,37 @@
               <thead>
                 <tr>
                     <th>ID</th>
-                    <th>教师名称</th>
-                    <th>所在学校</th>
-                    <th>所在院系</th>
-                    <th>所在班级</th>
-                    <th>撤销权限</th>
-                    <th>删除</th>
+                    <th>题目</th>
+                    <th>类型</th>
+                    <th>描述</th>
+                    <th>答案</th>
+                    <th>难度</th>
+                    <th class="text-center">通过该题目</th>
+                    <th class="text-center">放弃该题目</th>
                 </tr>
               </thead>
               <tbody>
-                {% for t in list %}
+                {% for q in list %}
                     <tr>
-                        <td>{{ t.user_id }}</td>
-                        <td><a href="{% url 'sqltrainapp:personinfo' t.user_name %}">{{ t.user_name }}</a></td>
-                        <td>{{ t.school }}</td>
-                        <td>{{ t.faculties }}</td>
-                        <td>{{ t.cls }}</td>
-                        <td><a href="{% url 'sqltrainapp:revoke_T' t.user_id %}" onClick="return validate()">撤销权限</a> </td>
-                        <td><a href="{% url 'sqltrainapp:delete' t.user_id %}" onClick="return validate_delete()">删除</a> </td>
+                        <td>{{ q.ques_id }}</td>
+                        <td>{{ q.ques_title }}</td>
+                        <td>{{ q.ques_type }}</td>
+                        <td>{{ q.ques_content }}</td>
+                        <td>{{ q.answer }}</td>
+                        <td>{{ q.level }}</td>
+                        <td class="text-center"><a href="{% url 'sqltrainapp:passed_Q' q.ques_id %}" onClick="return validate_pass()">通过</a></td>
+                        <td class="text-center"><a href="{% url 'sqltrainapp:failed_Q' q.ques_id %}" onClick="return validate_fail()">放弃</a></td>
                     </tr>
                 {% endfor %}
               </tbody>
             </table>
           </div>
             {% else %}
-                没有教师。<br>
-                你可以提升在<a href="{% url 'sqltrainapp:A_manage_S' %}">学生管理</a>页面，提升学生权限，使其成为教师。
+                没有题目。
             {% endif %}
-
+            <span style="color: green">{{ msg }}</span>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>

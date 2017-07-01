@@ -34,9 +34,9 @@
         </ul>
         <ul class="nav nav-sidebar">
             <li class="nav text-center nav-tabs">其他功能</li>
-            <li><a href="">上传题目</a></li>
-            <li><a href="">上传历史</a></li>
-            <li><a href="">审核题目</a></li>
+            <li><a href="{% url 'sqltrainapp:submit_Q' %}">上传题目</a></li>
+            <li><a href="{% url 'sqltrainapp:submit_Q_his' %}">上传历史</a></li>
+            <li><a href="{% url 'sqltrainapp:T_check_Q' %}">审核题目</a></li>
         </ul>
     {% elif user.user_type == '3' %}
         <ul class="nav nav-sidebar">
@@ -47,8 +47,8 @@
         </ul>
         <ul class="nav nav-sidebar">
             <li class="nav text-center nav-tabs">其他功能</li>
-            <li><a href="">上传题目</a></li>
-            <li><a href="">上传历史</a></li>
+            <li><a href="{% url 'sqltrainapp:submit_Q' %}">上传题目</a></li>
+            <li><a href="{% url 'sqltrainapp:submit_Q_his' %}">上传历史</a></li>
         </ul>
     {% endif %}
 </div>

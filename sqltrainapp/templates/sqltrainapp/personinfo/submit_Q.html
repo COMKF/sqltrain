@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>admin</title>
+    {% include './include_CSS_JS.html' %}
+</head>
+
+<body>
+{% include '../include_head.html' %}
+
+    <div class="container-fluid">
+      <div class="row">
+        {% include './include_sidebar.html' %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            <div class="panel panel-primary col-sm-8">
+            <div class="panel-heading">
+              <h3 class="panel-title">上传题目</h3>
+            </div>
+            <div class="panel-body">
+                   <form action="{% url 'sqltrainapp:submit_Q_detail' %}" method="POST">
+                        {% csrf_token %} <!-- 这是一个防出错的标签，只要有表单，就加上它。 -->
+                        <div class="row">
+                            <div class="form-group col-xs-8">
+                                <label>题目类型</label>
+                                <select class="form-control" name="ques_type">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-8">
+                                <label>题目</label>
+                                <input type="text" name="ques_title" class="form-control"
+                                       placeholder="必填" required/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-8">
+                                <label>内容</label>
+                                <textarea name="ques_content"  class="form-control" rows="4"
+                                          placeholder="必填" required></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-6">
+                                <label>答案</label>
+                                <input name="answer" type="text" class="form-control"
+                                       placeholder="必填" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-6">
+                                <label>难度等级</label>
+                                <select class="form-control" name="level">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <button class="btn btn-lg btn-primary center-block" type="submit">上传</button>
+                            </div>
+                        </div>
+                    </form>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

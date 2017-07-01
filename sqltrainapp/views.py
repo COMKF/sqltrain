@@ -1,18 +1,13 @@
 import json
-
-import django.utils
-
 from .models import User, Question, Doques
 from django.db import connection
 import operator
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .form import register_f, login_f, changepwd_f
-
 from django.urls import reverse
-
+from django.db.models import Q
 import datetime
-
 
 
 def check(func):  # 使用装饰器验证用户登录
@@ -39,8 +34,7 @@ def check_type_1(func):  # 使用装饰器验证用户权限
         if x.session.get('user_name'):  # 进行验证，用户是否登录
             if User.objects.get(user_name=x.session.get('user_name')).user_type == '1':  # 验证用户权限
                 return func(*args, **kw)  # 如果登录，则执行原函数
-        else:
-            return render(x, 'sqltrainapp/index.html')  # 如果没有登录，则跳转到index页面
+        return render(x, 'sqltrainapp/index.html')  # 如果没有登录，则跳转到index页面
 
     return wrapper
 
@@ -51,8 +45,7 @@ def check_type_2(func):
         if x.session.get('user_name'):  # 进行验证，用户是否登录
             if User.objects.get(user_name=x.session.get('user_name')).user_type == '2':  # 验证用户权限
                 return func(*args, **kw)  # 如果登录，则执行原函数
-        else:
-            return render(x, 'sqltrainapp/index.html')  # 如果没有登录，则跳转到index页面
+        return render(x, 'sqltrainapp/index.html')  # 如果没有登录，则跳转到index页面
 
     return wrapper
 
@@ -63,8 +56,7 @@ def check_type_3(func):
         if x.session.get('user_name'):  # 进行验证，用户是否登录
             if User.objects.get(user_name=x.session.get('user_name')).user_type == '3':  # 验证用户权限
                 return func(*args, **kw)  # 如果登录，则执行原函数
-        else:
-            return render(x, 'sqltrainapp/index.html')  # 如果没有登录，则跳转到index页面
+        return render(x, 'sqltrainapp/index.html')  # 如果没有登录，则跳转到index页面
 
     return wrapper
 
@@ -105,11 +97,8 @@ def register_detail(request):
         cls = r['cls']
 
         if f.is_valid():  # 验证请求的内容和Form里面的是否验证通过。通过是True，否则False。
-            id = int(User.objects.raw('Select user_id,max(user_id) from sqltrainapp_user')[0].user_id) + 1
-            u = User(user_id='%05d' % id, user_name=f.cleaned_data['user_name'], pwd=f.cleaned_data['pwd'], user_type=3,
+            u = User(user_name=f.cleaned_data['user_name'], pwd=f.cleaned_data['pwd'], user_type=3,
                      school=r['school'], faculties=r['faculties'], cls=r['cls'])
-
-            # print("123123123",f.cleaned_data['user_name'])  # cleaned_data类型是字典，里面是提交成功后的信息。
             u.save()
             return render(request, 'sqltrainapp/login.html', {"msg": '注册成功，请登录'})
         else:  # 错误信息包含是否为空，或者符合正则表达式的规则
@@ -147,7 +136,7 @@ def basic(request):
     # base = cursor.fetchall()
     # for x in base:
     #      print(x)
-    return render(request, 'sqltrainapp/questions/basic.html', {'basicquestion':base})
+    return render(request, 'sqltrainapp/questions/basic.html', {'basicquestion': base})
 
 
 @check
@@ -226,27 +215,27 @@ def result(request):
         # 写入 错误原因 及 用户的答案
         uname = request.session.get('user_name')
         print('[Info    ]' + str(uname))
-        if uname :
-             user = User.objects.get(user_name=uname)
-             uid = user.user_id
-             u = User.objects.get(user_id=uid)
-             q = Question.objects.get(ques_id=data3)
-             answ = data1
-             result=cmpresult
-             # stime = datetime.datetime.now()
-             # stime2 = datetime.datetime.utcnow() + datetime.timedelta(hours=8.0)
-             # stime = django.utils.timezone.now() + datetime.timedelta(hours=8.0)
-             # print('[Info   ]' + str(stime))
-             # print('[Info   ]' + str(stime2))
+        if uname:
+            user = User.objects.get(user_name=uname)
+            uid = user.user_id
+            u = User.objects.get(user_id=uid)
+            q = Question.objects.get(ques_id=data3)
+            answ = data1
+            result = cmpresult
+            # stime = datetime.datetime.now()
+            # stime2 = datetime.datetime.utcnow() + datetime.timedelta(hours=8.0)
+            # stime = django.utils.timezone.now() + datetime.timedelta(hours=8.0)
+            # print('[Info   ]' + str(stime))
+            # print('[Info   ]' + str(stime2))
 
-             d = Doques.objects.create(someone=u,
-                                       someques=q,
-                                       answ_content=answ,
-                                       result_type=result,
-                                       start_time=datetime.datetime.now() + datetime.timedelta(hours=8.0),
-                                       end_time=datetime.datetime.now() + datetime.timedelta(hours=8.0)
-                                       )
-             d.save()
+            d = Doques.objects.create(someone=u,
+                                      someques=q,
+                                      answ_content=answ,
+                                      result_type=result,
+                                      start_time=datetime.datetime.now() + datetime.timedelta(hours=8.0),
+                                      end_time=datetime.datetime.now() + datetime.timedelta(hours=8.0)
+                                      )
+            d.save()
 
         # 返回查询结果和提示信息
         ret = {'result': row,
@@ -258,30 +247,31 @@ def result(request):
     else:
         print('[Info    ]Ok , you must enter sql')
         ret = {
-            'cmpresult':'you must enter sqlstring'
+            'cmpresult': 'you must enter sqlstring'
         }
         return HttpResponse(json.dump(ret), content_type='application/json')
 
-    # print('[Info    ]' + str(type(results)))
-    # for x in results:
-    #     print(x)
-    #     # print(x.surname)
-    # # 到这里就得到了用户输入sql语句的结果
-    # # 下面进行判断set<>是否相同，a,b  a-b
-    # ret = results
-    # return HttpResponse(ret)
-    # return render(request, 'train/result.html', {'results': results})
+        # print('[Info    ]' + str(type(results)))
+        # for x in results:
+        #     print(x)
+        #     # print(x.surname)
+        # # 到这里就得到了用户输入sql语句的结果
+        # # 下面进行判断set<>是否相同，a,b  a-b
+        # ret = results
+        # return HttpResponse(ret)
+        # return render(request, 'train/result.html', {'results': results})
+
 
 # @check
 def joins(request):
     base = Question.objects.filter(ques_type='0812020102')
-    return render(request, 'sqltrainapp/questions/joins.html', {'joinquestion':base})
+    return render(request, 'sqltrainapp/questions/joins.html', {'joinquestion': base})
 
 
 # @check
 def aggregates(request):
     base = Question.objects.filter(ques_type='0812020103')
-    return render(request, 'sqltrainapp/questions/aggregates.html', {'aggregatesquestion':base})
+    return render(request, 'sqltrainapp/questions/aggregates.html', {'aggregatesquestion': base})
 
 
 # @check
@@ -322,13 +312,6 @@ def personinfo(request, user_name):
         user = User.objects.filter(user_name=user_name)[0]
         if user_name == request.session.get('user_name'):
             return render(request, 'sqltrainapp/personinfo/personinfo.html', {"user": user})
-            # if u.user_type == '1':
-            #     # return render(request, 'sqltrainapp/personinfo/test.html')
-            #     return render(request, 'sqltrainapp/personinfo/admin.html')
-            # elif u.user_type == '2':
-            #     return render(request, 'sqltrainapp/personinfo/teacher.html')
-            # elif u.user_type == '3':
-            #     return render(request, 'sqltrainapp/personinfo/student.html')
         else:
             return render(request, 'sqltrainapp/personinfo/OtherPersonInfo.html', {"user": user})
     else:
@@ -377,6 +360,8 @@ def changepwd_detail(request):
 def A_manage_T(request):
     user = User.objects.get(user_name=request.session.get('user_name'))
     list = User.objects.filter(user_type='2')
+    if request.method == "POST":
+        list = select_TorS(request, list)
     return render(request, 'sqltrainapp/personinfo/A_manage_T.html', {'list': list, 'user': user})
 
 
@@ -390,8 +375,10 @@ def revoke_T(request, user_id):
 
 @check_type_1
 def A_manage_S(request):
-    user = User.objects.get(user_name=request.session.get('user_name'))
     list = User.objects.filter(user_type='3')
+    user = User.objects.get(user_name=request.session.get('user_name'))
+    if request.method == "POST":
+        list = select_TorS(request, list)
     return render(request, 'sqltrainapp/personinfo/A_manage_S.html', {'list': list, 'user': user})
 
 
@@ -418,37 +405,80 @@ def delete(request, user_id):
 def T_show_S(request):
     user = User.objects.get(user_name=request.session.get('user_name'))
     list = User.objects.filter(user_type='3')
+    if request.method == "POST":
+        list = select_TorS(request, list)
     return render(request, 'sqltrainapp/personinfo/T_show_S.html', {'list': list, 'user': user})
 
 
 @check_type_2
 def T_show_Q(request):
     user = User.objects.get(user_name=request.session.get('user_name'))
-    list = Question.objects.exclude(ques_type='99')
+    list = Question.objects.exclude(ques_type__startswith='99')
+    if request.method == "POST":
+        list = Select_Q(request, list)
     return render(request, 'sqltrainapp/personinfo/T_show_Q.html', {'list': list, 'user': user})
 
 
-# @check_type_2
-# def submitques(request):
-#     user = User.objects.get(user_name=request.session.get('user_name'))
-#     return render(request, 'sqltrainapp/personinfo/submitques.html', {'list': list, 'user': user})
+@check_type_2
+def T_check_Q(request):
+    user = User.objects.get(user_name=request.session.get('user_name'))
+    list = Question.objects.filter(ques_type__startswith='99')
+    if request.method == "POST":
+        list = Select_Q(request, list)
+    return render(request, 'sqltrainapp/personinfo/T_check_Q.html', {'list': list, 'user': user})
+
+@check_type_2
+def passed_Q(request,ques_id):
+    q = Question.objects.get(ques_id=ques_id)
+    q.ques_type = q.ques_type[2:]
+    q.save()
+    return HttpResponseRedirect(reverse('sqltrainapp:T_check_Q'))
+
+@check_type_2
+def failed_Q(request,ques_id):
+    q = Question.objects.get(ques_id=ques_id)
+    q.ques_type = '00'+q.ques_type
+    q.save()
+    return HttpResponseRedirect(reverse('sqltrainapp:T_check_Q'))
+
+
+@check
+def submit_Q(request):
+    user = User.objects.get(user_name=request.session.get('user_name'))
+    return render(request, 'sqltrainapp/personinfo/submit_Q.html', {'user': user})
+
+
+@check
+def submit_Q_detail(request):
+    user = User.objects.get(user_name=request.session.get('user_name'))
+    r = request.POST
+    q = Question(ques_title=r['ques_title'], ques_content=r['ques_content'],
+                 answer=r['answer'], level=r['level'], submit_user=user)
+    if user.user_type == '2':
+        q.ques_type = r['ques_type']
+        q.save()
+    if user.user_type == '3':
+        q.ques_type = '99'+ r['ques_type']
+        q.save()
+    return HttpResponseRedirect(reverse('sqltrainapp:submit_Q_his'))
+
+@check
+def submit_Q_his(request):
+    user = User.objects.get(user_name=request.session.get('user_name'))
+    list = Question.objects.filter(submit_user=user)
+    if request.method == "POST":
+        list = Select_Q(request, list)
+    list_pass = list.filter(~Q(ques_type__startswith='99') & ~Q(ques_type__startswith='0099'))
+    list_wait = list.filter(ques_type__startswith='99')
+    list_fail = list.filter(ques_type__startswith='0099')
+    return render(request, 'sqltrainapp/personinfo/submit_Q_his.html', {'list_pass': list_pass,'list_wait':list_wait,'list_fail':list_fail,'user': user})
 
 
 @check_type_3
 def S_pass_Q(request):
-    list = Question.objects.exclude(ques_type='99')
+    list = Question.objects.exclude(ques_type__startswith='99')
     if request.method == "POST":
-        selection = request.POST['selection']
-        key = request.POST['key']
-        selecttype = request.POST['selecttype']
-        if selecttype:
-            list = list.filter(ques_type=selecttype)
-        if key:
-            if selection == 'ques_id':
-                list = list.filter(ques_id=key)
-            if selection == 'ques_title':
-                list = list.filter(ques_title__contains=key)
-
+        list = Select_Q(request, list)
     user = User.objects.get(user_name=request.session.get('user_name'))
     list = list.filter(doques__someone_id=user.user_id).filter(doques__result_type='通过')
     return render(request, 'sqltrainapp/personinfo/S_pass_Q.html', {'list': list, 'user': user})
@@ -456,19 +486,9 @@ def S_pass_Q(request):
 
 @check_type_3
 def S_fail_Q(request):
-    list = Question.objects.exclude(ques_type='99')
+    list = Question.objects.exclude(ques_type__startswith='99')
     if request.method == "POST":
-        selection = request.POST['selection']
-        key = request.POST['key']
-        selecttype = request.POST['selecttype']
-        if selecttype:
-            list = list.filter(ques_type=selecttype)
-        if key:
-            if selection == 'ques_id':
-                list = list.filter(ques_id=key)
-            if selection == 'ques_title':
-                list = list.filter(ques_title__contains=key)
-
+        list = Select_Q(request, list)
     user = User.objects.get(user_name=request.session.get('user_name'))
     list = list.filter(doques__someone_id=user.user_id).filter(doques__result_type='失败')
     return render(request, 'sqltrainapp/personinfo/S_fail_Q.html', {'list': list, 'user': user})
@@ -483,62 +503,44 @@ def S_his(request):
         key = request.POST['key']
         if key:
             if selection == 'run_id':
-                list = list.filter(run_id=key)
+                try:
+                    list = list.filter(run_id=key)
+                except ValueError:
+                    list = []
             if selection == 'answ_content':
                 list = list.filter(answ_content__contains=key)
     return render(request, 'sqltrainapp/personinfo/S_his.html', {'list': list, 'user': user})
 
 
 # 查询
-def A_select_T(request):
+# 重构方法，查询学生或老师
+def select_TorS(request, list):
     selection = request.POST['selection']
     key = request.POST['key']
-    list = User.objects.filter(user_type='2')
     if key:
         if selection == 'user_id':
-            list = list.filter(user_id=key)
+            try:
+                list = list.filter(user_id=key)
+            except ValueError:
+                list = []
         if selection == 'user_name':
             list = list.filter(user_name__contains=key)
-    user = User.objects.get(user_name=request.session.get('user_name'))
-    return render(request, 'sqltrainapp/personinfo/A_manage_T.html', {'list': list, 'user': user})
+    return list
 
 
-def A_select_S(request):
-    selection = request.POST['selection']
-    key = request.POST['key']
-    list = User.objects.filter(user_type='2')
-    if key:
-        if selection == 'user_id':
-            list = list.filter(user_id=key)
-        if selection == 'user_name':
-            list = list.filter(user_name__contains=key)
-    user = User.objects.get(user_name=request.session.get('user_name'))
-    return render(request, 'sqltrainapp/personinfo/A_manage_S.html', {'list': list, 'user': user})
-#
-def T_select_S(request):
-    selection = request.POST['selection']
-    key = request.POST['key']
-    list = User.objects.filter(user_type='3')
-    if key:
-        if selection == 'user_id':
-            list = list.filter(user_id=key)
-        if selection == 'user_name':
-            list = list.filter(user_name__contains=key)
-    user = User.objects.get(user_name=request.session.get('user_name'))
-    return render(request, 'sqltrainapp/personinfo/T_show_S.html', {'list': list, 'user': user})
-
-
-def T_select_Q(request):
+# 重构方法，查询问题
+def Select_Q(request, list):
     selection = request.POST['selection']
     key = request.POST['key']
     selecttype = request.POST['selecttype']
-    list = Question.objects.exclude(ques_type='99')
     if selecttype:
         list = list.filter(ques_type=selecttype)
     if key:
         if selection == 'ques_id':
-            list = list.filter(ques_id=key)
+            try:
+                list = list.filter(ques_id=key)
+            except ValueError:
+                list = []
         if selection == 'ques_title':
             list = list.filter(ques_title__contains=key)
-    user = User.objects.get(user_name=request.session.get('user_name'))
-    return render(request, 'sqltrainapp/personinfo/T_show_Q.html', {'list': list, 'user': user})
+    return list

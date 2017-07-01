@@ -43,17 +43,7 @@
                         <div class="pull-left">
                         <form action="{% url 'sqltrainapp:S_fail_Q' %}" method="post" >
                             {% csrf_token %}
-                            <select name="selection" class="form-text-control">
-                                <option value="ques_id" selected>ID</option>
-                                <option value="ques_title">题目</option>
-                            </select>
-                            <select name="selecttype" class="form-text-control">
-                                <option value="" selected>类型</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                            <input class="form-text-control" name="key" type="text" placeholder="可查询ID、类型或题目">
-                            <input class="btn btn-primary" type="submit" value="查询">
+                            {% include './include_Select_Q.html' %}
                         </form>
                         </div>
                     </div>

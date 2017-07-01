@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>admin</title>
+    {% include './include_CSS_JS.html' %}
+    <script>
+        function validate() {
+            var newtype = confirm("确定提升权限？");
+            if (newtype) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function validate_delete() {
+            var newtype = confirm("确定删除？");
+            if (newtype) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+{% include '../include_head.html' %}
+
+<div class="container-fluid">
+    <div class="row">
+        {% include './include_sidebar.html' %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            <div class="panel panel-primary col-sm-10">
+                <div class="panel-heading">
+                    <h3 class="panel-title">上传历史</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="panel-group">
+                                            <div class="row">
+                                                <div class="pull-left">
+                                                <form action="{% url 'sqltrainapp:submit_Q_his' %}" method="post" >
+                                                    {% csrf_token %}
+                                                    {% include './include_Select_Q.html' %}
+                                                </form>
+                                                </div>
+                                            </div>
+                    </div>
+                    <ul class="nav nav-tabs" style="width: 100%">
+                        <li role="presentation" style="width: 33%" class="text-center active"><a href="#pass"
+                                                                                                 data-toggle="tab">已通过审核</a>
+                        </li>
+                        <li role="presentation" style="width: 34%" class="text-center"><a href="#wait"
+                                                                                          data-toggle="tab">待审核</a>
+                        </li>
+                        <li role="presentation" style="width: 33%" class="text-center"><a href="#fail"
+                                                                                          data-toggle="tab">未通过审核</a>
+                        </li>
+                    </ul>
+                    <div class=" tab-pane tab-content tab-wraped">
+                        <div id="pass" class="table-responsive tab-pane active">
+                            {% if list_pass %}
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>题目</th>
+                                        <th>类型</th>
+                                        <th>描述</th>
+                                        <th>答案</th>
+                                        <th>难度</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for q in list_pass %}
+                                        <tr>
+                                            <td>{{ q.ques_id }}</td>
+                                            <td>{{ q.ques_title }}</td>
+                                            <td>{{ q.ques_type }}</td>
+                                            <td>{{ q.ques_content }}</td>
+                                            <td>{{ q.answer }}</td>
+                                            <td>{{ q.level }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                没有题目。
+                            {% endif %}
+                        </div>
+
+                        <div id="wait" class="table-responsive tab-pane">
+                            {% if list_wait %}
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>题目</th>
+                                        <th>类型</th>
+                                        <th>描述</th>
+                                        <th>答案</th>
+                                        <th>难度</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for q in list_wait %}
+                                        <tr>
+                                            <td>{{ q.ques_id }}</td>
+                                            <td>{{ q.ques_title }}</td>
+                                            <td>{{ q.ques_type }}</td>
+                                            <td>{{ q.ques_content }}</td>
+                                            <td>{{ q.answer }}</td>
+                                            <td>{{ q.level }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                没有题目。
+                            {% endif %}
+                        </div>
+
+                        <div id="fail" class="table-responsive tab-pane">
+                            {% if list_fail %}
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>题目</th>
+                                        <th>类型</th>
+                                        <th>描述</th>
+                                        <th>答案</th>
+                                        <th>难度</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for q in list_fail %}
+                                        <tr>
+                                            <td>{{ q.ques_id }}</td>
+                                            <td>{{ q.ques_title }}</td>
+                                            <td>{{ q.ques_type }}</td>
+                                            <td>{{ q.ques_content }}</td>
+                                            <td>{{ q.answer }}</td>
+                                            <td>{{ q.level }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                没有题目。
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <span style="color: green">{{ msg }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

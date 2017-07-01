@@ -41,14 +41,9 @@
                 <div class="panel-group">
                     <div class="row">
                         <div class="pull-left">
-                        <form action="{% url 'sqltrainapp:T_select_S' %}" method="post" >
+                        <form action="{% url 'sqltrainapp:T_show_S' %}" method="post" >
                             {% csrf_token %}
-                            <select name="selection" class="form-text-control">
-                                <option value="user_id" selected>ID</option>
-                                <option value="user_name">学生名称</option>
-                            </select>
-                            <input class="form-text-control" name="key" type="text" placeholder="可查询ID或学生名称">
-                            <input class="btn btn-primary" type="submit" value="查询">
+                            {% include './include_Select_TorS.html' %}
                         </form>
                         </div>
                     </div>
