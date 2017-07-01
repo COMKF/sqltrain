@@ -413,7 +413,7 @@ def T_show_S(request):
 @check_type_2
 def T_show_Q(request):
     user = User.objects.get(user_name=request.session.get('user_name'))
-    list = Question.objects.exclude(ques_type__startswith='99')
+    list = Question.objects.filter(~Q(ques_type__startswith='99') & ~Q(ques_type__startswith='0099'))
     if request.method == "POST":
         list = Select_Q(request, list)
     return render(request, 'sqltrainapp/personinfo/T_show_Q.html', {'list': list, 'user': user})
@@ -476,21 +476,19 @@ def submit_Q_his(request):
 
 @check_type_3
 def S_pass_Q(request):
-    list = Question.objects.exclude(ques_type__startswith='99')
+    user = User.objects.get(user_name=request.session.get('user_name'))
+    list = Question.objects.filter(~Q(ques_type__startswith='99') & ~Q(ques_type__startswith='0099'),doques__someone_id=user.user_id,doques__result_type='通过')
     if request.method == "POST":
         list = Select_Q(request, list)
-    user = User.objects.get(user_name=request.session.get('user_name'))
-    list = list.filter(doques__someone_id=user.user_id).filter(doques__result_type='通过')
     return render(request, 'sqltrainapp/personinfo/S_pass_Q.html', {'list': list, 'user': user})
 
 
 @check_type_3
 def S_fail_Q(request):
-    list = Question.objects.exclude(ques_type__startswith='99')
+    user = User.objects.get(user_name=request.session.get('user_name'))
+    list = Question.objects.filter(~Q(ques_type__startswith='99') & ~Q(ques_type__startswith='0099'),doques__someone_id=user.user_id,doques__result_type='失败')
     if request.method == "POST":
         list = Select_Q(request, list)
-    user = User.objects.get(user_name=request.session.get('user_name'))
-    list = list.filter(doques__someone_id=user.user_id).filter(doques__result_type='失败')
     return render(request, 'sqltrainapp/personinfo/S_fail_Q.html', {'list': list, 'user': user})
 
 
