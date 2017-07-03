@@ -10,5 +10,6 @@ build
 db.sqli*
 localwork
 migrations
+management
 __pycache__/
 
